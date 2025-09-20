@@ -11,6 +11,14 @@ trim_trailing_whitespace = true
 [*.ts]
 quote_type = single
 
+[*.js]
+quote_type = single
+
+[*.json]
+indent_style = space
+indent_size = 2
+trim_trailing_whitespace = true
+
 [*.md]
 max_line_length = off
 trim_trailing_whitespace = false
