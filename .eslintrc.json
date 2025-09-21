@@ -38,13 +38,20 @@
       }
     },
     {
+      "scripts": {
+        "lint": "eslint . --no-color"
+      }
+    },
+    {
       "files": [
         "*.html"
       ],
       "extends": [
         "plugin:@angular-eslint/template/recommended"
       ],
-      "rules": {}
+      "rules": {
+        "object-curly-spacing": ["error", "always"]
+      }
     }
   ]
 }

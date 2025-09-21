@@ -4,14 +4,14 @@
     <div formGroupName="metadata" class="form-area">
       <div class="row align-items-start">
         <div class="col-12 mb-1 text-uppercase fs-5 fw-medium">
-          {{title.data}}
+          {{ title.message }}
         </div>
       </div>
 
       <div class="row">
         <div class="col-12 mb-1">
-          <textarea class="form-control" [ngModel]="fileContent" [(ngModel)]="description.data"
-            formControlName="metadataFormDescription" rows="15"></textarea>
+          <textarea class="form-control" [ngModel]="fileContent" [(ngModel)]="description.message"
+                    formControlName="metadataFormDescription" rows="15"></textarea>
         </div>
       </div>
     </div>
@@ -19,7 +19,7 @@
     <div class="row">
       <div class="col-12 mb-1">
         <div class="input-group">
-          <input type="file" class="form-control" (change)="this.onFileSelected($event)" />
+          <input type="file" class="form-control" (change)="this.onFileSelected($event)"/>
           <button type="submit" class="btn btn-primary">
             Create
           </button>
@@ -31,34 +31,36 @@
       <div class="row">
         <div class="col-2">
           <select class="form-select form-control-sm" formControlName="metadataFormArchitecture">
-            <option *ngFor="let architecture of architectures" [value]="architecture.metadata.id">
-              {{ this.itemDescriptionFromList(architecture.metadata.id, architecture.metadata.data) }}
+            <option *ngFor="let architecture of architectures" [value]="architecture.id">
+              {{ this.itemDescriptionFromList(architecture.id, architecture.data) }}
             </option>
           </select>
         </div>
 
         <div class="col-2">
           <select class="form-select form-control-sm" formControlName="metadataFormDatabase">
-            <option *ngFor="let database of databases" [value]="database.metadata.id">
-              {{ this.itemDescriptionFromList(database.metadata.id, database.metadata.data) }}
+            <option *ngFor="let database of databases" [value]="database.id">
+              {{ this.itemDescriptionFromList(database.id, database.data) }}
             </option>
           </select>
         </div>
 
         <div class="col-2">
           <select class="form-select form-control-sm" formControlName="metadataFormDatabaseEngineer">
-            <option *ngFor="let databaseEngineer of databasesEngineer" [value]="databaseEngineer.metadata.id">
-              {{ this.itemDescriptionFromList(databaseEngineer.metadata.id, databaseEngineer.metadata.data) }}
+            <option *ngFor="let databaseEngineer of databasesEngineer" [value]="databaseEngineer.id">
+              {{ this.itemDescriptionFromList(databaseEngineer.id, databaseEngineer.data) }}
             </option>
           </select>
         </div>
 
         <div class="col-2">
           <select class="form-select form-control-sm" formControlName="metadataFormDevelopmentEnvironment">
-            <option *ngFor="let developmentEnvironment of developmentEnvironments"
-              [value]="developmentEnvironment.metadata.id">
-              {{ this.itemDescriptionFromList(developmentEnvironment.metadata.id,
-              developmentEnvironment.metadata.data) }}
+            <option *ngFor="let developmentEnvironment of environments"
+                    [value]="developmentEnvironment.id">
+              {{
+                this.itemDescriptionFromList(developmentEnvironment.id,
+                  developmentEnvironment.data)
+              }}
             </option>
           </select>
         </div>
@@ -66,9 +68,10 @@
         <div class="col-2">
           <div *ngIf="databases.length > 0">
             <select class="form-select form-control-sm" formControlName="metadataFormForm">
-              <option *ngFor="let form of forms" [value]="form.metadata.id">
-                {{ this.itemDescriptionFromList(form.metadata.id,
-                form.metadata.data) }}
+              <option *ngFor="let form of forms" [value]="form.id">
+                {{
+                  this.itemDescriptionFromList(form.id, form.data)
+                }}
               </option>
             </select>
           </div>
@@ -77,42 +80,44 @@
         <!-- Validations. -->
         <div *ngIf="startValidation">
           <div *ngIf="getDescription?.invalid && (getDescription?.dirty || getDescription?.touched)"
-            class="alert alert-danger mt-1" role="alert">
+               class="alert alert-danger mt-1" role="alert">
             <div *ngIf="getDescription?.errors?.['textContainsInicialValue']">Description is invalid.</div>
             <div *ngIf="getDescription?.errors?.['required'] || getDescription?.errors?.['notOnlyWhitespace']">
-              Description is empty.</div>
+              Description is empty.
+            </div>
             <div *ngIf="getDescription?.errors?.['minlength']">Description must be at least 2 characters
-              long.</div>
+              long.
+            </div>
           </div>
 
           <div class="col-12" *ngIf="getArchitecture?.invalid && (getArchitecture?.dirty || getArchitecture?.touched)"
-            class="alert alert-danger mt-1" role="alert">
+               class="alert alert-danger mt-1" role="alert">
 
             <div *ngIf="getArchitecture?.errors?.['min']">Architecture is invalid.</div>
           </div>
 
           <div class="col-12" *ngIf="getDatabase?.invalid && (getDatabase?.dirty || getDatabase?.touched)"
-            class="alert alert-danger mt-1" role="alert">
+               class="alert alert-danger mt-1" role="alert">
 
             <div *ngIf="getDatabase?.errors?.['min']">Database is invalid.</div>
           </div>
 
           <div class="col-12"
-            *ngIf="getDatabaseEngineer?.invalid && (getDatabaseEngineer?.dirty || getDatabaseEngineer?.touched)"
-            class="alert alert-danger mt-1" role="alert">
+               *ngIf="getDatabaseEngineer?.invalid && (getDatabaseEngineer?.dirty || getDatabaseEngineer?.touched)"
+               class="alert alert-danger mt-1" role="alert">
 
             <div *ngIf="getDatabaseEngineer?.errors?.['min']">Database engineer is invalid.</div>
           </div>
 
           <div class="col-12"
-            *ngIf="getDevelopmentEnvironment?.invalid && (getDevelopmentEnvironment?.dirty || getDevelopmentEnvironment?.touched)"
-            class="alert alert-danger mt-1" role="alert">
+               *ngIf="getDevelopmentEnvironment?.invalid && (getDevelopmentEnvironment?.dirty || getDevelopmentEnvironment?.touched)"
+               class="alert alert-danger mt-1" role="alert">
 
             <div *ngIf="getDevelopmentEnvironment?.errors?.['min']">Development environment is invalid.</div>
           </div>
 
           <div class="col-12" *ngIf="getForm?.invalid && (getForm?.dirty || getForm?.touched)"
-            class="alert alert-danger mt-1" role="alert">
+               class="alert alert-danger mt-1" role="alert">
 
             <div *ngIf="getForm?.errors?.['min']">Form is invalid.</div>
           </div>
