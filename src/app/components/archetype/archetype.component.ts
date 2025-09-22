@@ -65,64 +65,32 @@ export class ArchetypeComponent implements OnInit {
         this.setForms();
     }
 
-    private setTitle(): void {
-        this.title.data = this.archetypeService.setTitle();
+    private async setTitle(): Promise<void> {
+        this.title.data = await this.archetypeService.getData(`${this._basePath}${this._title}`);
     }
 
-    private setDescription(): void {
-        this.metadataService.getData$(`${this._basePath}${this._description}`).subscribe((response) => {
-            this.description.data = response.data;
-        });
+    private async setDescription(): Promise<void> {
+        this.description.data = await this.archetypeService.getData(`${this._basePath}${this._description}`);
     }
 
-    private setArchitectures(): void {
-        this.metadataService.getDataItems$(`${this._basePath}${this._architectures}`).pipe(
-            map(response => {
-                return response;
-            }))
-            .subscribe(transformedResponse => {
-                this.architectures = transformedResponse;
-            });
+    private async setArchitectures(): Promise<void> {
+        this.architectures = await this.archetypeService.getDataItems(`${this._basePath}${this._architectures}`);
     }
 
-    private setDatabases(): void {
-        this.metadataService.getDataItems$(`${this._basePath}${this._databases}`).pipe(
-            map(response => {
-                return response;
-            }))
-            .subscribe(transformedResponse => {
-                this.databases = transformedResponse;
-            });
+    private async setDatabases(): Promise<void> {
+        this.databases = await this.archetypeService.getDataItems(`${this._basePath}${this._databases}`);
     }
 
-    private setDatabasesEngineer(): void {
-        this.metadataService.getDataItems$(`${this._basePath}${this._databasesEngineer}`).pipe(
-            map(response => {
-                return response;
-            }))
-            .subscribe(transformedResponse => {
-                this.databasesEngineer = transformedResponse;
-            });
+    private async setDatabasesEngineer(): Promise<void> {
+        this.databasesEngineer = await this.archetypeService.getDataItems(`${this._basePath}${this._databasesEngineer}`);
     }
 
-    private setEnvironments(): void {
-        this.metadataService.getDataItems$(`${this._basePath}${this._environments}`).pipe(
-            map(response => {
-                return response;
-            }))
-            .subscribe(transformedResponse => {
-                this.environments = transformedResponse;
-            });
+    private async setEnvironments(): Promise<void> {
+        this.environments = await this.archetypeService.getDataItems(`${this._basePath}${this._environments}`);
     }
 
-    private setForms(): void {
-        this.metadataService.getDataItems$(`${this._basePath}${this._forms}`).pipe(
-            map(response => {
-                return response;
-            }))
-            .subscribe(transformedResponse => {
-                this.forms = transformedResponse;
-            });
+    private async setForms(): Promise<void> {
+        this.forms = await this.archetypeService.getDataItems(`${this._basePath}${this._forms}`);
     }
 
     public itemDescriptionFromList(itemId: number, itemData: string): string {

@@ -20,10 +20,10 @@ export class HttpclientService {
     }
 
     public sendData$(url: string, data: any): Observable<any> {
-        return this.http.post<any>(url, data, this.httpOptions);
+        return this.http.post<Array<any>>(url, data, this.httpOptions);
     }
 
-    public getDataItems$(url: string): Observable<any[]> {
-        return this.http.get<any[]>(url, this.httpOptions);
+    public getDataItems$(url: string): Observable<Array<any>> {
+        return this.http.get<Array<any>>(url, this.httpOptions);
     }
 }

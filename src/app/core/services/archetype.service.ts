@@ -1,5 +1,6 @@
 import {Injectable} from '@angular/core';
 import {HttpclientService} from "./httpclient.service";
+import {map} from "rxjs/operators";
 
 @Injectable({
     providedIn: 'root'
@@ -18,14 +19,14 @@ export class ArchetypeService {
     constructor(private client: HttpclientService) {
     }
 
-    public setTitle(): string {
-        let result: string = '';
+    public async getData(url: string): Promise<string> {
+        const response = await this.client.getData$(url).toPromise();
+        return response.data;
+    }
 
-        this.client.getData$(`${this._basePath}${this._title}`).subscribe((response: any): void => {
-            result = response.data;
-            console.log(result);
-        });
-
-        return result;
+    public async getDataItems(url: string): Promise<any> {
+        return this.client.getDataItems$(url).pipe(
+            map(response => response)
+        ).toPromise();
     }
 }
