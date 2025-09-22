@@ -134,3 +134,4 @@ dist
 
 # angular cache
 .angular/cache
+/.angular/

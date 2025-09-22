@@ -1,11 +1,11 @@
 import {ChangeDetectorRef, Component, OnInit} from '@angular/core';
 import {FormBuilder, FormControl, FormGroup, Validators} from '@angular/forms';
 import {map} from 'rxjs/operators';
-import {MetadataValidation} from 'src/app/common/util/validator/metadatavalidation';
-import {HttpclientService} from 'src/app/services/httpclient.service';
-import {Hyperparameters} from "../../common/interface/hyperparameters";
-import {HyperparametersItems} from "../../common/interface/hyperparametersItems";
-import {ArchetypeService} from "../../services/archetype.service";
+import {MetadataValidation} from 'src/app/shared/validator/metadatavalidation';
+import {HttpclientService} from 'src/app/core/services/httpclient.service';
+import {Hyperparameters} from "../../shared/interface/hyperparameters";
+import {HyperparametersItems} from "../../shared/interface/hyperparametersItems";
+import {ArchetypeService} from "../../core/services/archetype.service";
 
 @Component({
     selector: 'app-archetype',
