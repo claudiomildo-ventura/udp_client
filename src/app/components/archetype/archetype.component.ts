@@ -1,40 +1,45 @@
 import {ChangeDetectorRef, Component, OnInit} from '@angular/core';
 import {FormBuilder, FormControl, FormGroup, Validators} from '@angular/forms';
 import {map} from 'rxjs/operators';
-import {MetadataValidation} from 'src/app/common/validators/metadatavalidation';
+import {MetadataValidation} from 'src/app/common/util/validator/metadatavalidation';
 import {HttpclientService} from 'src/app/services/httpclient.service';
 import {Hyperparameters} from "../../common/interface/hyperparameters";
 import {HyperparametersItems} from "../../common/interface/hyperparametersItems";
+import {ArchetypeService} from "../../services/archetype.service";
 
 @Component({
-    selector: 'app-metadata',
-    templateUrl: './metadata.component.html',
-    styleUrls: ['./metadata.component.css'],
+    selector: 'app-archetype',
+    templateUrl: './archetype.component.html',
+    styleUrls: ['./archetype.component.css'],
 })
-export class MetadataComponent implements OnInit {
-    private readonly _basePath = 'http://localhost:3000/api/udphyperparameters/v1';
-    private readonly _title = '/title';
-    private readonly _description = '/description';
-    private readonly _databases = '/databases';
-    private readonly _architectures = '/architectures';
-    private readonly _databasesEngineer = '/databases-engineer';
-    private readonly _environments = '/environments';
-    private readonly _forms = '/forms';
+export class ArchetypeComponent implements OnInit {
+    private readonly _basePath: string = 'http://localhost:3000/api/udphyperparameters/v1';
+    private readonly _title: string = '/title';
+    private readonly _description: string = '/description';
+    private readonly _databases: string = '/databases';
+    private readonly _architectures: string = '/architectures';
+    private readonly _databasesEngineer: string = '/databases-engineer';
+    private readonly _environments: string = '/environments';
+    private readonly _forms: string = '/forms';
 
-    public metadataFormGroup!: FormGroup;
-    public readonly title: Hyperparameters = {message: ''};
-    public readonly description: Hyperparameters = {message: ''};
+    private DEFAULT_ITEM_ID: number = 0;
+    private DEFAULT_ITEM_LABEL: string = 'Items';
+
+    public readonly title: Hyperparameters = {data: ''};
+    public readonly description: Hyperparameters = {data: ''};
     public architectures: HyperparametersItems[] = [{id: 0, data: ''}];
     public databases: HyperparametersItems[] = [{id: 0, data: ''}];
     public databasesEngineer: HyperparametersItems[] = [{id: 0, data: ''}];
     public environments: HyperparametersItems[] = [{id: 0, data: ''}];
     public forms: HyperparametersItems[] = [{id: 0, data: ''}];
 
+    public metadataFormGroup!: FormGroup;
     public fileContent: string | ArrayBuffer | null = '';
 
     public startValidation: boolean = false;
 
     constructor(
+        private archetypeService: ArchetypeService,
         private metadataService: HttpclientService,
         private formBuilder: FormBuilder,
         private changeDetector: ChangeDetectorRef
@@ -61,14 +66,12 @@ export class MetadataComponent implements OnInit {
     }
 
     private setTitle(): void {
-        this.metadataService.getData$(`${this._basePath}${this._title}`).subscribe((response) => {
-            this.title.message = response.message;
-        });
+        this.title.data = this.archetypeService.setTitle();
     }
 
     private setDescription(): void {
         this.metadataService.getData$(`${this._basePath}${this._description}`).subscribe((response) => {
-            this.description.message = response.message;
+            this.description.data = response.data;
         });
     }
 
@@ -123,7 +126,7 @@ export class MetadataComponent implements OnInit {
     }
 
     public itemDescriptionFromList(itemId: number, itemData: string): string {
-        return itemId === 0 ? 'Items' : itemData;
+        return itemId === this.DEFAULT_ITEM_ID ? this.DEFAULT_ITEM_LABEL : itemData;
     }
 
     public createMetadataForm(): void {

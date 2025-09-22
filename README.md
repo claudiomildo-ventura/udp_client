@@ -28,7 +28,7 @@
   </p>
   <p>
     <a href="https://skillicons.dev">
-      <img src="https://skillicons.dev/icons?i=ai,vscode,javascript,angular,git,github,md" alt="Skills: IntelliJ AI, Javascript, Angular, Git, GitHub, Markdown">
+      <img src="https://skillicons.dev/icons?i=ai,webstorm,javascript,angular,git,github,md" alt="Skills: IntelliJ AI, Javascript, Angular, Git, GitHub, Markdown">
     </a>
   </p>
 

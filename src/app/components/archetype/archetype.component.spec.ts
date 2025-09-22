@@ -1,20 +1,20 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { MetadataComponent } from './metadata.component';
+import { ArchetypeComponent } from './archetype.component';
 
-describe('MetadataComponent', () => {
-  let component: MetadataComponent;
-  let fixture: ComponentFixture<MetadataComponent>;
+describe('ArchetypeComponent', () => {
+  let component: ArchetypeComponent;
+  let fixture: ComponentFixture<ArchetypeComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ MetadataComponent ]
+      declarations: [ ArchetypeComponent ]
     })
     .compileComponents();
   });
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(MetadataComponent);
+    fixture = TestBed.createComponent(ArchetypeComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });
