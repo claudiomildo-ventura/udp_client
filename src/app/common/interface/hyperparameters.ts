@@ -1,3 +1,3 @@
 export interface Hyperparameters {
-    message: string;
+    data: string;
 }

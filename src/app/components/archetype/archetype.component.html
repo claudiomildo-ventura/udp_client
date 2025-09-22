@@ -4,13 +4,13 @@
     <div formGroupName="metadata" class="form-area">
       <div class="row align-items-start">
         <div class="col-12 mb-1 text-uppercase fs-5 fw-medium">
-          {{ title.message }}
+          {{ title.data }}
         </div>
       </div>
 
       <div class="row">
         <div class="col-12 mb-1">
-          <textarea class="form-control" [ngModel]="fileContent" [(ngModel)]="description.message"
+          <textarea class="form-control" [ngModel]="fileContent" [(ngModel)]="description.data"
                     formControlName="metadataFormDescription" rows="15"></textarea>
         </div>
       </div>
