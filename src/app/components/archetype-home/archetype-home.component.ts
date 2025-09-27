@@ -14,19 +14,19 @@ import {CommonModule} from "@angular/common";
     styleUrls: ['./archetype-home.component.css'],
 })
 export class ArchetypeHomeComponent implements OnInit {
-    private readonly _basePath: string = 'http://localhost:3000/api/udphyperparameters/v1';
-    private readonly _description: string = '/description';
+
+    private readonly _basePath: string = 'http://localhost:3000/api/v1';
+    private readonly _detail: string = '/detail';
     private readonly _databases: string = '/databases';
     private readonly _architectures: string = '/architectures';
     private readonly _databasesEngineer: string = '/databases-engineer';
     private readonly _environments: string = '/environments';
     private readonly _forms: string = '/forms';
-    myText: string = '';
     btnCreate: string = '';
     private DEFAULT_ITEM_ID: number = 0;
     private DEFAULT_ITEM_LABEL: string = 'Items';
 
-    public description: Hyperparameters = {data: ''};
+    public detail: Hyperparameters = {data: ''};
     public architectures: HyperparametersItems[] = [{id: 0, data: ''}];
     public databases: HyperparametersItems[] = [{id: 0, data: ''}];
     public databasesEngineer: HyperparametersItems[] = [{id: 0, data: ''}];
@@ -65,7 +65,7 @@ export class ArchetypeHomeComponent implements OnInit {
 
 
     private async setDescription(): Promise<void> {
-        this.description.data = await this.archetypeService.getData(`${this._basePath}${this._description}`);
+        this.detail.data = await this.archetypeService.getData(`${this._basePath}${this._detail}`);
     }
 
     private async setArchitectures(): Promise<void> {

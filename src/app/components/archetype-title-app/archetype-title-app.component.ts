@@ -10,7 +10,7 @@ import {Hyperparameters} from "../../shared/interface/hyperparameters";
     styleUrls: ['./archetype-title-app.component.css']
 })
 export class ArchetypeTitleAppComponent implements OnInit {
-    private readonly _basePath: string = 'http://localhost:3000/api/udphyperparameters/v1';
+    private readonly _basePath: string = 'http://localhost:3000/api/v1';
     private readonly _title: string = '/title';
     public readonly title: Hyperparameters = {data: ''};
 

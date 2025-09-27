@@ -6,7 +6,9 @@ import {routes} from "./app/app.component.route";
 import {provideRouter} from "@angular/router";
 
 if (environment.production) {
-  //enableProdMode();
+    console.log('Running in production mode');
+} else if (environment.development) {
+    console.log('Running in development mode');
 }
 
 bootstrapApplication(AppComponent, {
