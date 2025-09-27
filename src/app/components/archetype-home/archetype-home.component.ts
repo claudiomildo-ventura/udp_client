@@ -1,32 +1,32 @@
 import {ChangeDetectorRef, Component, OnInit} from '@angular/core';
 import {FormBuilder, FormControl, FormGroup, Validators} from '@angular/forms';
-import {map} from 'rxjs/operators';
 import {MetadataValidation} from 'src/app/shared/validator/metadatavalidation';
-import {HttpclientService} from 'src/app/core/services/httpclient.service';
 import {Hyperparameters} from "../../shared/interface/hyperparameters";
 import {HyperparametersItems} from "../../shared/interface/hyperparametersItems";
 import {ArchetypeService} from "../../core/services/archetype.service";
+import {CommonModule} from "@angular/common";
 
 @Component({
-    selector: 'app-archetype',
-    templateUrl: './archetype.component.html',
-    styleUrls: ['./archetype.component.css'],
+    selector: 'archetype-home',
+    standalone: true,
+    imports: [CommonModule],
+    templateUrl: './archetype-home.component.html',
+    styleUrls: ['./archetype-home.component.css'],
 })
-export class ArchetypeComponent implements OnInit {
+export class ArchetypeHomeComponent implements OnInit {
     private readonly _basePath: string = 'http://localhost:3000/api/udphyperparameters/v1';
-    private readonly _title: string = '/title';
     private readonly _description: string = '/description';
     private readonly _databases: string = '/databases';
     private readonly _architectures: string = '/architectures';
     private readonly _databasesEngineer: string = '/databases-engineer';
     private readonly _environments: string = '/environments';
     private readonly _forms: string = '/forms';
-
+    myText: string = '';
+    btnCreate: string = '';
     private DEFAULT_ITEM_ID: number = 0;
     private DEFAULT_ITEM_LABEL: string = 'Items';
 
-    public readonly title: Hyperparameters = {data: ''};
-    public readonly description: Hyperparameters = {data: ''};
+    public description: Hyperparameters = {data: ''};
     public architectures: HyperparametersItems[] = [{id: 0, data: ''}];
     public databases: HyperparametersItems[] = [{id: 0, data: ''}];
     public databasesEngineer: HyperparametersItems[] = [{id: 0, data: ''}];
@@ -38,15 +38,14 @@ export class ArchetypeComponent implements OnInit {
 
     public startValidation: boolean = false;
 
-    constructor(
-        private archetypeService: ArchetypeService,
-        private metadataService: HttpclientService,
-        private formBuilder: FormBuilder,
-        private changeDetector: ChangeDetectorRef
+    constructor(private formBuilder: FormBuilder,
+                private changeDetector: ChangeDetectorRef,
+                private archetypeService: ArchetypeService
     ) {
     }
 
     ngOnInit(): void {
+        this.btnCreate = 'Create';
         this.loadMetadata();
         this.createMetadataForm();
     }
@@ -56,7 +55,6 @@ export class ArchetypeComponent implements OnInit {
     }
 
     private loadMetadata(): void {
-        this.setTitle();
         this.setDescription();
         this.setArchitectures();
         this.setDatabases();
@@ -65,9 +63,6 @@ export class ArchetypeComponent implements OnInit {
         this.setForms();
     }
 
-    private async setTitle(): Promise<void> {
-        this.title.data = await this.archetypeService.getData(`${this._basePath}${this._title}`);
-    }
 
     private async setDescription(): Promise<void> {
         this.description.data = await this.archetypeService.getData(`${this._basePath}${this._description}`);

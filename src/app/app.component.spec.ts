@@ -22,7 +22,7 @@ describe('AppComponent', () => {
     expect(app.title).toEqual('angular-ecommerce');
   });
 
-  it('should render title', () => {
+  it('should render archetype-title-app', () => {
     const fixture = TestBed.createComponent(AppComponent);
     fixture.detectChanges();
     const compiled = fixture.nativeElement as HTMLElement;
