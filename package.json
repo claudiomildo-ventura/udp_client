@@ -1,6 +1,6 @@
 {
   "name": "UDP_front-end",
-  "version": "1.1.0",
+  "version": "1.0.0",
   "scripts": {
     "ng": "ng",
     "start": "ng serve",
@@ -18,6 +18,8 @@
     "@angular/platform-browser": "^17.3.12",
     "@angular/platform-browser-dynamic": "^17.3.12",
     "@angular/router": "^17.3.12",
+    "@ngx-translate/core": "^17.0.0",
+    "@ngx-translate/http-loader": "^17.0.0",
     "rxjs": "~7.8.0",
     "tslib": "^2.3.0",
     "zone.js": "~0.14.10"
@@ -36,5 +38,27 @@
     "prettier": "^3.6.2",
     "prettier-plugin-curly": "^0.3.2",
     "typescript": "~5.4.5"
+  },
+  "browserslist": [
+    "safari >= 12",
+    "edge >= 79",
+    "firefox >= 72",
+    "chrome >= 79",
+    "chromeAndroid 119",
+    "ios_saf >= 12",
+    "not op_mini all",
+    "not dead"
+  ],
+  "prettier": {
+    "trailingComma": "all",
+    "tabWidth": 4,
+    "semi": true,
+    "singleQuote": true,
+    "bracketSpacing": true,
+    "arrowParens": "always",
+    "printWidth": 120,
+    "plugins": [
+      "prettier-plugin-curly"
+    ]
   }
 }
