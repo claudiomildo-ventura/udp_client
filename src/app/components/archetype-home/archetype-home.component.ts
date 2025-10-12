@@ -17,8 +17,8 @@ import {environment} from 'src/environments/environment';
 export class ArchetypeHomeComponent implements OnInit {
 
     btnCreate: string = '';
-    private DEFAULT_ITEM_ID: number = 0;
-    private DEFAULT_ITEM_LABEL: string = 'Items';
+    private ID_DEFAULT_ITEM: number = 0;
+    private LABEL_DEFAULT_ITEM: string = 'Items';
 
     public detail: Hyperparameters = {data: ''};
     public architectures: HyperparametersItems[] = [{id: 0, data: ''}];
@@ -28,7 +28,7 @@ export class ArchetypeHomeComponent implements OnInit {
     public forms: HyperparametersItems[] = [{id: 0, data: ''}];
     public scaffolds: HyperparametersItems[] = [{id: 0, data: ''}];
 
-    public metadataFormGroup!: FormGroup;
+    public archetypeFrm!: FormGroup;
     public fileContent: string | ArrayBuffer | null = '';
 
     public startValidation: boolean = false;
@@ -48,7 +48,7 @@ export class ArchetypeHomeComponent implements OnInit {
         this.setEnvironments();
         this.setForms();
         this.setScaffolds();
-        this.createMetadataForm();
+        this.archetypeFormCreate();
     }
 
     ngAfterContentChecked(): void {
@@ -83,60 +83,63 @@ export class ArchetypeHomeComponent implements OnInit {
         this.scaffolds = await this.archetypeService.getDataItems(`${environment.basePath}${environment.endpoints.scaffold}`);
     }
 
-    public itemDescriptionFromList(itemId: number, itemData: string): string {
-        return itemId === this.DEFAULT_ITEM_ID ? this.DEFAULT_ITEM_LABEL : itemData;
+    public setItemDescriptionDefault(id: number, data: string): string {
+        return id === this.ID_DEFAULT_ITEM ? this.LABEL_DEFAULT_ITEM : data;
     }
 
-    public createMetadataForm(): void {
-        let formInitialValue: string = '0';
+    public archetypeFormCreate(): void {
 
-        this.metadataFormGroup = this.formBuilder.group({
-            metadata: this.formBuilder.group({
-                metadataFormDescription: new FormControl('', [Validators.required, Validators.minLength(2), MetadataValidation.notOnlyWhitespace, MetadataValidation.textContainsInicialValue]),
-            }),
-            metadataItemList: this.formBuilder.group({
-                metadataFormArchitecture: new FormControl(formInitialValue, [Validators.required, Validators.min(1)]),
-                metadataFormDatabase: new FormControl(formInitialValue, [Validators.required, Validators.min(1)]),
-                metadataFormDatabaseEngineer: new FormControl(formInitialValue, [Validators.required, Validators.min(1)]),
-                metadataFormDevelopmentEnvironment: new FormControl(formInitialValue, [Validators.required, Validators.min(1)]),
-                metadataFormForm: new FormControl(formInitialValue, [Validators.required, Validators.min(1)]),
+        this.archetypeFrm = this.formBuilder.group({
+            archetypeFrmGroupOne: this.formBuilder.group({
+                archetypeDetail: new FormControl('', [Validators.required, Validators.minLength(2), MetadataValidation.notOnlyWhitespace, MetadataValidation.textContainsInicialValue]),}),
+            archetypeFrmGroupTwo: this.formBuilder.group({
+                archetypeScaffold: new FormControl(String('0'), [Validators.required, Validators.min(1)]),
+                archetypeArchitectures: new FormControl(String('0'), [Validators.required, Validators.min(1)]),
+                archetypeDatabases: new FormControl(String('0'), [Validators.required, Validators.min(1)]),
+                archetypeDatabasesEngineer: new FormControl(String('0'), [Validators.required, Validators.min(1)]),
+                archetypeEnvironments: new FormControl(String('0'), [Validators.required, Validators.min(1)]),
+                archetypeForms: new FormControl(String('0'), [Validators.required, Validators.min(1)]),
             }),
         });
     }
 
-    get getDescription() {
-        return this.metadataFormGroup.get('metadata.metadataFormDescription');
+    get getArchetypeDetail() {
+        return this.archetypeFrm.get('archetypeFrmGroupOne.archetypeDetail');
     }
 
-    get getArchitecture() {
-        return this.metadataFormGroup.get('metadataItemList.metadataFormArchitecture');
+    get getArchetypeScaffold() {
+        return this.archetypeFrm.get('archetypeFrmGroupTwo.archetypeScaffold');
     }
 
-    get getDatabase() {
-        return this.metadataFormGroup.get('metadataItemList.metadataFormDatabase');
+    get getArchetypeArchitectures() {
+        return this.archetypeFrm.get('archetypeFrmGroupTwo.archetypeArchitectures');
     }
 
-    get getDatabaseEngineer() {
-        return this.metadataFormGroup.get('metadataItemList.metadataFormDatabaseEngineer');
+    get getArchetypeDatabases() {
+        return this.archetypeFrm.get('archetypeFrmGroupTwo.archetypeDatabases');
     }
 
-    get getDevelopmentEnvironment() {
-        return this.metadataFormGroup.get('metadataItemList.metadataFormDevelopmentEnvironment');
+    get getArchetypeDatabasesEngineer() {
+        return this.archetypeFrm.get('archetypeFrmGroupTwo.archetypeDatabasesEngineer');
     }
 
-    get getForm() {
-        return this.metadataFormGroup.get('metadataItemList.metadataFormForm');
+    get getArchetypeEnvironments() {
+        return this.archetypeFrm.get('archetypeFrmGroupTwo.archetypeEnvironments');
+    }
+
+    get getArchetypeForms() {
+        return this.archetypeFrm.get('archetypeFrmGroupTwo.archetypeForms');
     }
 
     public metadataFormSubmit(): void {
         console.log('Form here');
 
-        if (this.metadataFormGroup.invalid) {
+        if (this.archetypeFrm.invalid) {
             this.startValidation = true;
-            this.metadataFormGroup.markAllAsTouched();
+            this.archetypeFrm.markAllAsTouched();
         } else {
-            console.log(this.metadataFormGroup.get('metadata')?.value);
-            console.log(this.metadataFormGroup.get('metadataItemList')?.value);
+            console.log(this.archetypeFrm.get('archetypeFrmGroupOne')?.value);
+            console.log(this.archetypeFrm.get('archetypeFrmGroupTwo')?.value);
         }
     }
 

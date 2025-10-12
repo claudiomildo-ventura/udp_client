@@ -1,10 +1,10 @@
 <form class="mt-5">
     <div class="container">
-        <div formGroupName="metadata" class="form-area">
+        <div formGroupName="archetypeFrmGroupOne" class="form-area">
 
             <div class="row">
                 <div class="col-12 mb-1">
-                    <textarea class="form-control" formControlName="metadataFormDescription"
+                    <textarea class="form-control" formControlName="archetypeDetail"
                               rows="15"> {{ this.detail.data }}</textarea>
                 </div>
             </div>
@@ -21,14 +21,14 @@
             </div>
         </div>
 
-        <div formGroupName="metadataItemList" class="form-area">
+        <div formGroupName="archetypeFrmGroupTwo" class="form-area">
             <div class="row">
 
                 <div class="col-2">
                     <div *ngIf="scaffolds.length > 0">
-                        <select class="form-select form-control-sm" formControlName="metadataFormForm">
+                        <select class="form-select form-control-sm" formControlName="archetypeScaffold">
                             <option *ngFor="let scaffold of scaffolds" [value]="scaffold.id">
-                                {{ this.itemDescriptionFromList(scaffold.id, scaffold.data) }}
+                                {{ this.setItemDescriptionDefault(scaffold.id, scaffold.data) }}
                             </option>
                         </select>
                     </div>
@@ -36,9 +36,9 @@
 
                 <div class="col-2">
                     <div *ngIf="architectures.length > 0">
-                        <select class="form-select form-control-sm" formControlName="metadataFormArchitecture">
+                        <select class="form-select form-control-sm" formControlName="archetypeArchitectures">
                             <option *ngFor="let architecture of architectures" [value]="architecture.id">
-                                {{ this.itemDescriptionFromList(architecture.id, architecture.data) }}
+                                {{ this.setItemDescriptionDefault(architecture.id, architecture.data) }}
                             </option>
                         </select>
                     </div>
@@ -46,9 +46,9 @@
 
                 <div class="col-2">
                     <div *ngIf="databases.length > 0">
-                        <select class="form-select form-control-sm" formControlName="metadataFormDatabase">
+                        <select class="form-select form-control-sm" formControlName="archetypeDatabases">
                             <option *ngFor="let database of databases" [value]="database.id">
-                                {{ this.itemDescriptionFromList(database.id, database.data) }}
+                                {{ this.setItemDescriptionDefault(database.id, database.data) }}
                             </option>
                         </select>
                     </div>
@@ -56,9 +56,9 @@
 
                 <div class="col-2">
                     <div *ngIf="databasesEngineer.length > 0">
-                        <select class="form-select form-control-sm" formControlName="metadataFormDatabaseEngineer">
+                        <select class="form-select form-control-sm" formControlName="archetypeDatabasesEngineer">
                             <option *ngFor="let databaseEngineer of databasesEngineer" [value]="databaseEngineer.id">
-                                {{ this.itemDescriptionFromList(databaseEngineer.id, databaseEngineer.data) }}
+                                {{ this.setItemDescriptionDefault(databaseEngineer.id, databaseEngineer.data) }}
                             </option>
                         </select>
                     </div>
@@ -66,11 +66,9 @@
 
                 <div class="col-2">
                     <div *ngIf="environments.length > 0">
-                        <select class="form-select form-control-sm"
-                                formControlName="metadataFormDevelopmentEnvironment">
-                            <option *ngFor="let developmentEnvironment of environments"
-                                    [value]="developmentEnvironment.id">
-                                {{ this.itemDescriptionFromList(developmentEnvironment.id, developmentEnvironment.data) }}
+                        <select class="form-select form-control-sm" formControlName="archetypeEnvironments">
+                            <option *ngFor="let developmentEnvironment of environments" [value]="developmentEnvironment.id">
+                                {{ this.setItemDescriptionDefault(developmentEnvironment.id, developmentEnvironment.data) }}
                             </option>
                         </select>
                     </div>
@@ -78,9 +76,9 @@
 
                 <div class="col-2">
                     <div *ngIf="forms.length > 0">
-                        <select class="form-select form-control-sm" formControlName="metadataFormForm">
+                        <select class="form-select form-control-sm" formControlName="archetypeForms">
                             <option *ngFor="let form of forms" [value]="form.id">
-                                {{ this.itemDescriptionFromList(form.id, form.data) }}
+                                {{ this.setItemDescriptionDefault(form.id, form.data) }}
                             </option>
                         </select>
                     </div>
@@ -88,50 +86,56 @@
 
                 <!-- Validations. -->
                 <div *ngIf="startValidation">
-                    <div *ngIf="getDescription?.invalid && (getDescription?.dirty || getDescription?.touched)"
+                    <div *ngIf="getArchetypeDetail?.invalid && (getArchetypeDetail?.dirty || getArchetypeDetail?.touched)"
                          class="alert alert-danger mt-1" role="alert">
-                        <div *ngIf="getDescription?.errors?.['textContainsInicialValue']">Description is invalid.</div>
+                        <div *ngIf="getArchetypeDetail?.errors?.['textContainsInicialValue']">Detail is invalid.</div>
                         <div
-                            *ngIf="getDescription?.errors?.['required'] || getDescription?.errors?.['notOnlyWhitespace']">
+                            *ngIf="getArchetypeDetail?.errors?.['required'] || getArchetypeDetail?.errors?.['notOnlyWhitespace']">
                             Description is empty.
                         </div>
-                        <div *ngIf="getDescription?.errors?.['minlength']">Description must be at least 2 characters
+                        <div *ngIf="getArchetypeDetail?.errors?.['minlength']">Description must be at least 2 characters
                             long.
                         </div>
                     </div>
 
                     <div class="col-12"
-                         *ngIf="getArchitecture?.invalid && (getArchitecture?.dirty || getArchitecture?.touched)"
+                         *ngIf="getArchetypeScaffold?.invalid && (getArchetypeScaffold?.dirty || getArchetypeScaffold?.touched)"
                          class="alert alert-danger mt-1" role="alert">
 
-                        <div *ngIf="getArchitecture?.errors?.['min']">Architecture is invalid.</div>
-                    </div>
-
-                    <div class="col-12" *ngIf="getDatabase?.invalid && (getDatabase?.dirty || getDatabase?.touched)"
-                         class="alert alert-danger mt-1" role="alert">
-
-                        <div *ngIf="getDatabase?.errors?.['min']">Database is invalid.</div>
+                        <div *ngIf="getArchetypeScaffold?.errors?.['min']">Scaffold is invalid.</div>
                     </div>
 
                     <div class="col-12"
-                         *ngIf="getDatabaseEngineer?.invalid && (getDatabaseEngineer?.dirty || getDatabaseEngineer?.touched)"
+                         *ngIf="getArchetypeArchitectures?.invalid && (getArchetypeArchitectures?.dirty || getArchetypeArchitectures?.touched)"
                          class="alert alert-danger mt-1" role="alert">
 
-                        <div *ngIf="getDatabaseEngineer?.errors?.['min']">Database engineer is invalid.</div>
+                        <div *ngIf="getArchetypeArchitectures?.errors?.['min']">Architecture is invalid.</div>
+                    </div>
+
+                    <div class="col-12" *ngIf="getArchetypeDatabases?.invalid && (getArchetypeDatabases?.dirty || getArchetypeDatabases?.touched)"
+                         class="alert alert-danger mt-1" role="alert">
+
+                        <div *ngIf="getArchetypeDatabases?.errors?.['min']">Database is invalid.</div>
                     </div>
 
                     <div class="col-12"
-                         *ngIf="getDevelopmentEnvironment?.invalid && (getDevelopmentEnvironment?.dirty || getDevelopmentEnvironment?.touched)"
+                         *ngIf="getArchetypeDatabasesEngineer?.invalid && (getArchetypeDatabasesEngineer?.dirty || getArchetypeDatabasesEngineer?.touched)"
                          class="alert alert-danger mt-1" role="alert">
 
-                        <div *ngIf="getDevelopmentEnvironment?.errors?.['min']">Development environment is invalid.
-                        </div>
+                        <div *ngIf="getArchetypeDatabasesEngineer?.errors?.['min']">Databases engineer is invalid.</div>
                     </div>
 
-                    <div class="col-12" *ngIf="getForm?.invalid && (getForm?.dirty || getForm?.touched)"
+                    <div class="col-12"
+                         *ngIf="getArchetypeEnvironments?.invalid && (getArchetypeEnvironments?.dirty || getArchetypeEnvironments?.touched)"
                          class="alert alert-danger mt-1" role="alert">
 
-                        <div *ngIf="getForm?.errors?.['min']">Form is invalid.</div>
+                        <div *ngIf="getArchetypeEnvironments?.errors?.['min']">Environment is invalid.</div>
+                    </div>
+
+                    <div class="col-12" *ngIf="getArchetypeForms?.invalid && (getArchetypeForms?.dirty || getArchetypeForms?.touched)"
+                         class="alert alert-danger mt-1" role="alert">
+
+                        <div *ngIf="getArchetypeForms?.errors?.['min']">Forms is invalid.</div>
                     </div>
                 </div>
                 <!-- Validations. -->
