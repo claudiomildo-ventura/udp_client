@@ -1,20 +1,20 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { ArchetypeHomeComponent } from './archetype-home.component';
+import { ArchetypeHomeAppComponent } from './archetype-home-app.component';
 
-describe('ArchetypeHomeComponent', () => {
-  let component: ArchetypeHomeComponent;
-  let fixture: ComponentFixture<ArchetypeHomeComponent>;
+describe('ArchetypeHomeAppComponent', () => {
+  let component: ArchetypeHomeAppComponent;
+  let fixture: ComponentFixture<ArchetypeHomeAppComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ ArchetypeHomeComponent ]
+      declarations: [ ArchetypeHomeAppComponent ]
     })
     .compileComponents();
   });
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(ArchetypeHomeComponent);
+    fixture = TestBed.createComponent(ArchetypeHomeAppComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

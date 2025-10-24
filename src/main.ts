@@ -13,4 +13,4 @@ if (environment.production) {
 
 bootstrapApplication(AppComponent, {
     providers: [provideHttpClient(), provideRouter(ROUTES)]
-}).catch(ex => console.error(ex));
+});

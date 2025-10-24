@@ -1,6 +1,6 @@
 import {Component} from '@angular/core';
 import {ArchetypeTitleAppComponent} from "./components/archetype-title-app/archetype-title-app.component";
-import {ArchetypeHomeComponent} from "./components/archetype-home/archetype-home.component";
+import {ArchetypeHomeAppComponent} from "./components/archetype-home-app/archetype-home-app.component";
 import {TranslateModule} from "@ngx-translate/core";
 import {ArchetypeFooterAppComponent} from "./components/archetype-footer-app/archetype-footer-app.component";
 
@@ -9,7 +9,7 @@ import {ArchetypeFooterAppComponent} from "./components/archetype-footer-app/arc
     standalone: true,
     imports: [
         ArchetypeTitleAppComponent,
-        ArchetypeHomeComponent,
+        ArchetypeHomeAppComponent,
         TranslateModule,
         ArchetypeFooterAppComponent],
     templateUrl: './app.component.html',
