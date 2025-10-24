@@ -1,5 +1,5 @@
 import {ChangeDetectorRef, Component, OnInit} from '@angular/core';
-import {FormBuilder, FormControl, FormGroup, Validators} from '@angular/forms';
+import {FormBuilder, FormControl, FormGroup, FormsModule, ReactiveFormsModule, Validators} from '@angular/forms';
 import {MetadataValidation} from 'src/app/shared/validator/metadatavalidation';
 import {Hyperparameters} from "../../shared/interface/hyperparameters";
 import {HyperparametersItems} from "../../shared/interface/hyperparametersItems";
@@ -8,15 +8,16 @@ import {CommonModule} from "@angular/common";
 import {environment} from 'src/environments/environment';
 
 @Component({
-    selector: 'archetype-home',
+    selector: 'archetype-home-app',
     standalone: true,
-    imports: [CommonModule],
-    templateUrl: './archetype-home.component.html',
-    styleUrls: ['./archetype-home.component.css'],
+    imports: [CommonModule, FormsModule, ReactiveFormsModule],
+    templateUrl: './archetype-home-app.component.html',
+    styleUrls: ['./archetype-home-app.component.css'],
 })
-export class ArchetypeHomeComponent implements OnInit {
+export class ArchetypeHomeAppComponent implements OnInit {
 
     btnCreate: string = '';
+    detailIsDefault: boolean = true;
     private ID_DEFAULT_ITEM: number = 0;
     private LABEL_DEFAULT_ITEM: string = 'Items';
 
@@ -52,7 +53,7 @@ export class ArchetypeHomeComponent implements OnInit {
     }
 
     ngAfterContentChecked(): void {
-        this.changeDetector.detectChanges();
+        //this.changeDetector.detectChanges();
     }
 
     private async setDescription(): Promise<void> {
@@ -131,7 +132,7 @@ export class ArchetypeHomeComponent implements OnInit {
         return this.archetypeFrm.get('archetypeFrmGroupTwo.archetypeForms');
     }
 
-    public metadataFormSubmit(): void {
+    public archetypeSubmit(): void {
         console.log('Form here');
 
         if (this.archetypeFrm.invalid) {
@@ -150,6 +151,7 @@ export class ArchetypeHomeComponent implements OnInit {
             reader.onload = () => {
                 if (reader.result !== null) {
                     this.fileContent = reader.result;
+                    this.detailIsDefault = false;
                 }
             };
             reader.readAsText(file);

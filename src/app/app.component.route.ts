@@ -1,17 +1,17 @@
 import {Routes} from '@angular/router';
-import {ArchetypeHomeComponent} from "./components/archetype-home/archetype-home.component";
+import {ArchetypeHomeAppComponent} from "./components/archetype-home-app/archetype-home-app.component";
 
 export const ROUTES: Routes = [
     {
         title: 'Home',
         path: '',
-        component: ArchetypeHomeComponent
+        component: ArchetypeHomeAppComponent
     },
     {
         title: 'Structure',
         path: 'structure',
         loadComponent: () =>
-            import('./components/archetype-structure/archetype-structure.component')
+            import('./components/archetype-structure-app/archetype-structure.component')
                 .then(view => view.ArchetypeStructureComponent),
     },
     {
