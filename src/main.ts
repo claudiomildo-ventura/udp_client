@@ -1,6 +1,6 @@
 import {bootstrapApplication} from '@angular/platform-browser';
 import {AppModule} from './app/app.module';
-import {provideHttpClient} from '@angular/common/http';
+import { provideHttpClient } from '@angular/common/http';
 import {environment} from './environments/environment';
 import {ROUTES} from "./app/app.route";
 import {PreloadAllModules, provideRouter, withInMemoryScrolling, withPreloading} from "@angular/router";
