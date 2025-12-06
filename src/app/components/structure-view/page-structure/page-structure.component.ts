@@ -1,12 +1,12 @@
 import { Component } from '@angular/core';
 
 @Component({
-  selector: 'archetype-structure-app',
+  selector: 'page-structure',
   standalone: true,
   imports: [],
-  templateUrl: './archetype-structure.component.html',
+  templateUrl: './page-structure.component.html',
   styleUrl: './archetype-structure-app.component.css'
 })
-export class ArchetypeStructureComponent {
+export class PageStructureComponent {
 
 }

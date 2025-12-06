@@ -1,4 +1,4 @@
-export const environment = {
+export const ENVIRONMENT = {
     basePath: '/orchestrator/v1/',
     btnCreate: 'Create',
     endpoints: {
@@ -14,5 +14,6 @@ export const environment = {
         scaffold: 'scaffold'
     },
     production: false,
-    development: true
+    development: true,
+    quality_assurance: false
 };

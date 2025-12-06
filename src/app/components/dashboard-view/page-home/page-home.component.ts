@@ -1,49 +1,55 @@
-import {ChangeDetectorRef, Component, OnInit} from '@angular/core';
+import {AfterViewInit, Component, ElementRef, inject, OnInit, ViewChild} from '@angular/core';
 import {FormBuilder, FormControl, FormGroup, FormsModule, ReactiveFormsModule, Validators} from '@angular/forms';
 import {MetadataValidation} from 'src/app/shared/validator/metadatavalidation';
-import {Hyperparameters} from "../../shared/interface/hyperparameters";
-import {ArchetypeService} from "../../core/services/archetype.service";
+import {Hyperparameters} from "../../../shared/interface/hyperparameters";
+import {ArchetypeService} from "../../../core/services/archetype.service";
 import {CommonModule} from "@angular/common";
-import {environment} from 'src/environments/environment';
+import {ENVIRONMENT} from 'src/environments/environment';
+import {ActivatedRoute, Router, RouterLink, RouterLinkActive} from "@angular/router";
+import {PageTitleComponent} from "../page-title/page-title.component";
+import {PageEndComponent} from "../page-end/page-end.component";
 
 @Component({
-    selector: 'archetype-home-app',
+    selector: 'page-home',
     standalone: true,
-    imports: [CommonModule, FormsModule, ReactiveFormsModule],
-    templateUrl: './archetype-home-app.component.html',
-    styleUrls: ['./archetype-home-app.component.css'],
+    imports: [CommonModule, FormsModule, ReactiveFormsModule, RouterLink, RouterLinkActive, PageTitleComponent, PageEndComponent],
+    templateUrl: './page-home.component.html',
+    styleUrls: ['./page-home.component.css'],
 })
-export class ArchetypeHomeAppComponent implements OnInit {
+export class PageHomeComponent implements OnInit, AfterViewInit {
+
+    private router = inject(Router);
+    private route = inject(ActivatedRoute);
 
     btnCreate: string = '';
     detailIsDefault: boolean = true;
-    private ID_DEFAULT_ITEM: number = 0;
-    private LABEL_DEFAULT_ITEM: string = 'Items';
 
     public detail: Hyperparameters = {data: ''};
-
     public archetypeFrm!: FormGroup;
     public fileContent: string | ArrayBuffer | null = '';
     public startValidation: boolean = false;
+    @ViewChild('btnCreateStructure') btnCreateStructure!: ElementRef<HTMLButtonElement>;
 
-    constructor(private formBuilder: FormBuilder,
-                private changeDetector: ChangeDetectorRef,
-                private archetypeService: ArchetypeService
+    constructor(private readonly formBuilder: FormBuilder,
+                private readonly archetypeService: ArchetypeService
     ) {
     }
 
     ngOnInit(): void {
-        this.btnCreate = environment.btnCreate;
+        this.btnCreate = ENVIRONMENT.btnCreate;
         this.setDetail();
         this.archetypeFormCreate();
     }
 
+    ngAfterViewInit() {
+        this.btnCreateStructure.nativeElement.focus();
+    }
+
     private async setDetail(): Promise<void> {
-        this.detail.data = await this.archetypeService.getData(`${environment.basePath}${environment.endpoints.detail}`);
+        this.detail.data = await this.archetypeService.getData(`${ENVIRONMENT.basePath}${ENVIRONMENT.endpoints.detail}`);
     }
 
     public archetypeFormCreate(): void {
-
         this.archetypeFrm = this.formBuilder.group({
             archetypeFrmGroupOne: this.formBuilder.group({
                 archetypeDetail: new FormControl('', [Validators.required, Validators.minLength(2), MetadataValidation.notOnlyWhitespace, MetadataValidation.textContainsInicialValue]),
@@ -56,14 +62,18 @@ export class ArchetypeHomeAppComponent implements OnInit {
     }
 
     public archetypeSubmit(): void {
+        console.log("It's here");
 
-        if (this.archetypeFrm.invalid) {
+        this.router.navigate(['/page-structure']).then(success => {
+            console.log('Navigation result:', success);
+        });
+        /*if (this.archetypeFrm.invalid) {
             this.startValidation = true;
             this.archetypeFrm.markAllAsTouched();
         } else {
             const groupValue = this.archetypeFrm.get('archetypeFrmGroupOne')?.value;
             console.log(groupValue);
-        }
+        }*/
     }
 
     public onFileSelected(event: Event): void {
@@ -83,6 +93,7 @@ export class ArchetypeHomeAppComponent implements OnInit {
         };
 
         reader.readAsText(file);
+        this.btnCreateStructure.nativeElement.focus();
     }
 
     private encodeBase64(text: string): string {
