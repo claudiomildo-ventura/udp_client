@@ -6,11 +6,13 @@ import {ArchetypeService} from "../../../core/services/archetype.service";
 import {CommonModule} from "@angular/common";
 import {environment} from 'src/environments/environment';
 import {ActivatedRoute, Router, RouterLink, RouterLinkActive} from "@angular/router";
+import {PageTitleComponent} from "../page-title/page-title.component";
+import {PageEndComponent} from "../page-end/page-end.component";
 
 @Component({
     selector: 'page-home',
     standalone: true,
-    imports: [CommonModule, FormsModule, ReactiveFormsModule, RouterLink, RouterLinkActive],
+    imports: [CommonModule, FormsModule, ReactiveFormsModule, RouterLink, RouterLinkActive, PageTitleComponent, PageEndComponent],
     templateUrl: './page-home.component.html',
     styleUrls: ['./page-home.component.css'],
 })
@@ -61,7 +63,10 @@ export class PageHomeComponent implements OnInit, AfterViewInit {
 
     public archetypeSubmit(): void {
         console.log("It's here");
-        this.router.navigate(['/page-structure']);
+
+        this.router.navigate(['/page-structure']).then(success => {
+            console.log('Navigation result:', success);
+        });
         /*if (this.archetypeFrm.invalid) {
             this.startValidation = true;
             this.archetypeFrm.markAllAsTouched();

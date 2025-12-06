@@ -1,7 +1,12 @@
 import {Routes} from '@angular/router';
-import {PageHomeComponent} from "./components/dashboard-view/page-home/page-home.component";
 
 export const ROUTES: Routes = [
+    {
+        path: '',
+        redirectTo: 'page-home',
+        pathMatch: 'full'
+    },
+
     {
         title: 'Home',
         path: 'page-home',
@@ -17,13 +22,13 @@ export const ROUTES: Routes = [
                 .then(view => view.PageStructureComponent),
     },
 
-    /*{
+    {
         title: 'Error page',
         path: 'erro',
         loadChildren: () =>
             import('./core/error/error.route')
                 .then(view => view.ERROR_ROUTES),
-    },*/
+    },
 
     {
         path: '**',

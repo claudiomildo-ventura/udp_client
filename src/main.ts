@@ -1,9 +1,10 @@
 import {bootstrapApplication} from '@angular/platform-browser';
-import {AppModule} from './app/app.module';
+import {AppComponent} from './app/app.component';
 import { provideHttpClient } from '@angular/common/http';
 import {environment} from './environments/environment';
 import {ROUTES} from "./app/app.route";
 import {PreloadAllModules, provideRouter, withInMemoryScrolling, withPreloading} from "@angular/router";
+import {ERROR_ROUTES} from "./app/core/error/error.route";
 
 if (environment.production) {
     console.log('Running in production mode');
@@ -11,7 +12,7 @@ if (environment.production) {
     console.log('Running in development mode');
 }
 
-bootstrapApplication(AppModule, {
+bootstrapApplication(AppComponent, {
     providers: [
         provideHttpClient(),
         provideRouter(

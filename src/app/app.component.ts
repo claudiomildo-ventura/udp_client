@@ -3,6 +3,7 @@ import {TranslateModule} from "@ngx-translate/core";
 import {PageHomeComponent} from "./components/dashboard-view/page-home/page-home.component";
 import {PageTitleComponent} from "./components/dashboard-view/page-title/page-title.component";
 import {PageEndComponent} from "./components/dashboard-view/page-end/page-end.component";
+import {RouterOutlet} from "@angular/router";
 
 @Component({
     selector: 'app-root',
@@ -11,11 +12,13 @@ import {PageEndComponent} from "./components/dashboard-view/page-end/page-end.co
         TranslateModule,
         PageTitleComponent,
         PageHomeComponent,
-        PageEndComponent],
-    templateUrl: './app.module.html',
-    styleUrls: ['./app.module.css']
+        PageEndComponent,
+        RouterOutlet
+    ],
+    templateUrl: './app.component.html',
+    styleUrls: ['./app.component.css']
 })
-export class AppModule {
+export class AppComponent {
 
     /*constructor(private translate: TranslateService) {
         translate.setDefaultLang('en');
