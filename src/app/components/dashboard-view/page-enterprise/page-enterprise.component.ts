@@ -1,4 +1,4 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, inject, OnInit} from '@angular/core';
 import {Hyperparameters} from "../../../shared/interface/hyperparameters";
 import {ArchetypeService} from "../../../core/services/archetype.service";
 import {ENVIRONMENT} from "../../../../environments/environment";
@@ -12,9 +12,7 @@ import {ENVIRONMENT} from "../../../../environments/environment";
 })
 export class PageEnterpriseComponent implements OnInit  {
     public readonly enterprise: Hyperparameters = {data: ''};
-
-    constructor(private archetypeService: ArchetypeService) {
-    }
+    private readonly archetypeService= inject(ArchetypeService);
 
     ngOnInit(): void {
         this.loadData();

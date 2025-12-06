@@ -1,4 +1,4 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, inject, OnInit} from '@angular/core';
 import {ArchetypeService} from "../../../core/services/archetype.service";
 import {Hyperparameters} from "../../../shared/interface/hyperparameters";
 import {ENVIRONMENT} from 'src/environments/environment';
@@ -13,9 +13,7 @@ import {UpperCasePipe} from "@angular/common";
 })
 export class PageTitleComponent implements OnInit {
     public readonly title: Hyperparameters = {data: ''};
-
-    constructor(private archetypeService: ArchetypeService) {
-    }
+    private readonly archetypeService = inject(ArchetypeService);
 
     ngOnInit(): void {
         this.setTitle();

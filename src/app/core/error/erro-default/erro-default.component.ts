@@ -9,7 +9,7 @@ import {Location} from '@angular/common';
     styleUrl: './erro-default.component.css'
 })
 export class ErroDefaultComponent {
-    private location = inject(Location);
+    private readonly location = inject(Location);
 
     public returnBack(): void {
         this.location.back();

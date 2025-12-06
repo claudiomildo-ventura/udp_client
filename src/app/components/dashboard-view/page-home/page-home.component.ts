@@ -5,35 +5,32 @@ import {Hyperparameters} from "../../../shared/interface/hyperparameters";
 import {ArchetypeService} from "../../../core/services/archetype.service";
 import {CommonModule} from "@angular/common";
 import {ENVIRONMENT} from 'src/environments/environment';
-import {ActivatedRoute, Router, RouterLink, RouterLinkActive} from "@angular/router";
+import {ActivatedRoute, Router} from "@angular/router";
 import {PageTitleComponent} from "../page-title/page-title.component";
 import {PageEndComponent} from "../page-end/page-end.component";
 
 @Component({
     selector: 'page-home',
     standalone: true,
-    imports: [CommonModule, FormsModule, ReactiveFormsModule, RouterLink, RouterLinkActive, PageTitleComponent, PageEndComponent],
+    imports: [CommonModule, FormsModule, ReactiveFormsModule, PageTitleComponent, PageEndComponent],
     templateUrl: './page-home.component.html',
     styleUrls: ['./page-home.component.css'],
 })
 export class PageHomeComponent implements OnInit, AfterViewInit {
 
-    private router = inject(Router);
-    private route = inject(ActivatedRoute);
+    private readonly router = inject(Router);
+    private readonly route = inject(ActivatedRoute);
+    private readonly formBuilder = inject(FormBuilder);
+    private readonly archetypeService = inject(ArchetypeService);
 
-    btnCreate: string = '';
-    detailIsDefault: boolean = true;
-
+    public btnCreate: string = '';
+    public detailIsDefault: boolean = true;
     public detail: Hyperparameters = {data: ''};
     public archetypeFrm!: FormGroup;
     public fileContent: string | ArrayBuffer | null = '';
     public startValidation: boolean = false;
-    @ViewChild('btnCreateStructure') btnCreateStructure!: ElementRef<HTMLButtonElement>;
 
-    constructor(private readonly formBuilder: FormBuilder,
-                private readonly archetypeService: ArchetypeService
-    ) {
-    }
+    @ViewChild('btnCreateStructure') btnCreateStructure!: ElementRef<HTMLButtonElement>;
 
     ngOnInit(): void {
         this.btnCreate = ENVIRONMENT.btnCreate;
