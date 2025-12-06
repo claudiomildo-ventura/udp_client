@@ -1,3 +1,13 @@
+/**
+ {*******************************************************************************}
+ {                                                                               }
+ {                          Unified Development Platform                         }
+ {                                                                               }
+ { Copyright(c) 2020-2025 CV IT Consulting and Services - Claudiomildo Ventura   }
+ {                                                                               }
+ {*******************************************************************************}
+ */
+
 import {AppComponent} from './app/app.component';
 import {bootstrapApplication} from '@angular/platform-browser';
 import {provideHttpClient} from '@angular/common/http';
@@ -5,13 +15,14 @@ import {PreloadAllModules, provideRouter, Route, withInMemoryScrolling, withPrel
 import {ENVIRONMENT} from './environments/environment';
 import {ROUTES} from "./app/app.route";
 import {ERROR_ROUTES} from "./app/core/error/error.route";
+import {TECHNICAL_LOGGER} from "./config/technical_logger";
 
 export const ALL_ROUTES: Route[] = [...ROUTES, ...ERROR_ROUTES];
 
 if (ENVIRONMENT.production) {
-    console.log('It is running in production mode.');
+    TECHNICAL_LOGGER.info('It is running in production mode.');
 } else if (ENVIRONMENT.development) {
-    console.log('It is running in development mode.');
+    TECHNICAL_LOGGER.info('It is running in development mode.');
 }
 
 bootstrapApplication(AppComponent, {
