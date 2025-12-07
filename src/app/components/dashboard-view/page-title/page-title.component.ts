@@ -1,4 +1,4 @@
-import {Component, inject, OnInit} from '@angular/core';
+import {Component, ElementRef, inject, OnInit, ViewChild} from '@angular/core';
 import {ArchetypeService} from "../../../core/services/archetype.service";
 import {Hyperparameters} from "../../../shared/interface/hyperparameters";
 import {ENVIRONMENT} from 'src/environments/environment';
@@ -12,14 +12,22 @@ import {UpperCasePipe} from "@angular/common";
     styleUrls: ['./page-title.component.css']
 })
 export class PageTitleComponent implements OnInit {
+
+    @ViewChild('txtTitle') txtTitle!: ElementRef<HTMLSpanElement>;
+
     public readonly title: Hyperparameters = {data: ''};
-    private readonly archetypeService = inject(ArchetypeService);
+    private readonly archetypeService: ArchetypeService = inject(ArchetypeService);
 
     ngOnInit(): void {
-        this.setTitle();
+        this.txtTitleInitialize();
     }
 
     private async setTitle(): Promise<void> {
-        this.title.data = await this.archetypeService.getData(`${ENVIRONMENT.basePath}${ENVIRONMENT.endpoints.title}`);
+        const url: string = `${ENVIRONMENT.basePath}${ENVIRONMENT.endpoints.title}`;
+        this.title.data = await this.archetypeService.getData(url);
+    }
+
+    private txtTitleInitialize(): void {
+        this.setTitle();
     }
 }

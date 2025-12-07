@@ -1,6 +1,5 @@
 export const ENVIRONMENT = {
     basePath: '/orchestrator/v1/',
-    btnCreate: 'Create',
     endpoints: {
         architectures: 'architectures',
         databases: 'databases',
