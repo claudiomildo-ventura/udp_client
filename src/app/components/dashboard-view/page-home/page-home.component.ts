@@ -1,6 +1,6 @@
 import {AfterViewInit, Component, ElementRef, inject, OnInit, ViewChild} from '@angular/core';
 import {FormBuilder, FormControl, FormGroup, FormsModule, ReactiveFormsModule, Validators} from '@angular/forms';
-import {MetadataValidation} from 'src/app/shared/validator/metadatavalidation';
+import {PageHomeValidation} from 'src/app/shared/validator/PageHomeValidation';
 import {Hyperparameters} from "../../../shared/interface/hyperparameters";
 import {ArchetypeService} from "../../../core/services/archetype.service";
 import {CommonModule} from "@angular/common";
@@ -9,6 +9,7 @@ import {STRING_FUNC} from 'src/app/core/string-utils/StringFunc';
 import {Router} from "@angular/router";
 import {PageTitleComponent} from "../page-title/page-title.component";
 import {PageEndComponent} from "../page-end/page-end.component";
+import {NUMBER_CONSTANT} from "../../../shared/NumberConstant";
 
 @Component({
     selector: 'page-home',
@@ -23,14 +24,15 @@ export class PageHomeComponent implements OnInit, AfterViewInit {
     @ViewChild('txtDetail') txtDetail!: ElementRef<HTMLTextAreaElement>;
     @ViewChild('txtFile') txtFile!: ElementRef<HTMLInputElement>;
 
-    private readonly router = inject(Router);
-    private readonly formBuilder = inject(FormBuilder);
-    private readonly archetypeService = inject(ArchetypeService);
-    private readonly createBtnTitle: string = 'Create the Structure';
+    private readonly router: Router = inject(Router);
+    private readonly formBuilder: FormBuilder = inject(FormBuilder);
+    private readonly archetypeService: ArchetypeService = inject(ArchetypeService);
 
     public detail: Hyperparameters = {data: ''};
     public frmHomePage!: FormGroup;
     public startValidation: boolean = false;
+
+    public errorList: Array<string> = [];
 
     ngOnInit(): void {
         this.frmHomePageInitialize();
@@ -39,6 +41,7 @@ export class PageHomeComponent implements OnInit, AfterViewInit {
     ngAfterViewInit(): void {
         this.txtDetailInitialize();
         this.btnConfirmInitialize();
+        this.errorListInitialize();
     }
 
     public get getDetail(): FormControl<string> {
@@ -51,7 +54,7 @@ export class PageHomeComponent implements OnInit, AfterViewInit {
             this.startValidation = true;
             this.frmHomePage.markAllAsTouched();
         } else {
-            const groupValue = this.frmHomePage.get('group1')?.value;
+            const groupValue: any = this.frmHomePage.get('group1')?.value;
 
             this.router.navigate(['/page-structure']).then(success => {
                 console.log('Navigation result:', success);
@@ -75,35 +78,44 @@ export class PageHomeComponent implements OnInit, AfterViewInit {
         reader.readAsText(file);
     }
 
-
     private async setDetail(): Promise<void> {
-        const url = `${ENVIRONMENT.basePath}${ENVIRONMENT.endpoints.detail}`;
+        const url: string = `${ENVIRONMENT.basePath}${ENVIRONMENT.endpoints.detail}`;
         this.detail.data = await this.archetypeService.getData(url);
     }
 
     private frmHomePageInitialize(): void {
         this.frmHomePage = this.formBuilder.group({
             group1: this.formBuilder.group({
-                detail: new FormControl(STRING_FUNC.StringEmpty,
+                detail: new FormControl(STRING_FUNC.STRING_EMPTY,
                     [
                         Validators.required,
-                        Validators.minLength(2),
-                        MetadataValidation.notOnlyWhitespace,
-                        MetadataValidation.textContainsInicialValue
+                        Validators.minLength(NUMBER_CONSTANT.INITIALIZE_WITH_2),
+                        PageHomeValidation.textContainsValue,
+                        PageHomeValidation.textContainsDefaultValue,
+                        PageHomeValidation.textContainsCreateTableValue
                     ]),
             }),
         });
     }
 
     private txtDetailInitialize(): void {
-        this.txtDetail.nativeElement.focus();
         this.setDetail();
+        this.txtDetail.nativeElement.readOnly = true;
+        this.txtDetail.nativeElement.focus();
     }
 
     private btnConfirmInitialize(): void {
-        this.btnConfirm.nativeElement.title = this.createBtnTitle;
+        this.btnConfirm.nativeElement.title = 'Create the Structure';
         this.btnConfirm.nativeElement.style.width = '70px';
         this.btnConfirm.nativeElement.disabled = true;
+    }
+
+    private errorListInitialize(): void {
+        this.errorList = Array.of(
+            'The detail content must be at least 2 characters long.',
+            'The detail content is empty.',
+            'The detail content is invalid.'
+        );
     }
 
     private txtDetailGetFormContent(content: string): void {

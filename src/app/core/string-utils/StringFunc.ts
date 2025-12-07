@@ -1,4 +1,4 @@
 export const STRING_FUNC = {
-  StringEmpty: '',
+  STRING_EMPTY: '',
 
 };

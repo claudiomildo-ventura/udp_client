@@ -1,37 +1,46 @@
 <page-title></page-title>
 
-<form class="mt-5" [formGroup]="frmHomePage" (ngSubmit)="submit()">
-
-    <div class="container">
-        <div formGroupName="group1" class="form-area">
-            <div class="row">
-                <div class="col-12">
-                    <textarea #txtDetail formControlName="detail" readonly class="form-control" [value]="this.detail.data" rows="15"></textarea>
+<div class="container">
+    <form [formGroup]="frmHomePage" (ngSubmit)="submit()">
+        <div formGroupName="group1">
+            <div class="row col-12 input-group mt-3">
+                <div class="input-group-text">
+                    <textarea #txtDetail formControlName="detail" class="form-control" [value]="this.detail.data" rows="20"></textarea>
                 </div>
             </div>
 
-            <div class="row">
-                <div class="col-12">
-                    <div class="input-group mt-2">
-                        <input #txtFile type="file" class="form-control" (change)="this.onFileSelected($event)"/>
+            <div class="row col-12 input-group mt-2">
+                <input #txtFile type="file" class="form-control" (change)="this.onFileSelected($event)"/>
 
-                        <button #btnConfirm type="submit" class="btn btn-outline-secondary">
-                            <span class="icon font">✔️</span>
-                        </button>
+                <button #btnConfirm type="submit" class="btn btn-outline-secondary">
+                    <span class="icon font">✔️</span>
+                </button>
+            </div>
+
+            <div *ngIf="startValidation">
+                <div class="row col-12 input-group mt-2" *ngIf="getDetail?.invalid && (getDetail?.dirty || getDetail?.touched)">
+                    <div class="alert alert-warning" role="alert">
+                        <div *ngIf="getDetail?.errors?.['minlength']">
+                            <span>{{ this.errorList[0] }}wwwwwwwwwwwwwwwwwwwww</span>
+                        </div>
+
+                        <div *ngIf="getDetail?.errors?.['required'] || getDetail?.errors?.['textContainsValue']">
+                            <span>{{ this.errorList[1] }}rrrrrrrrrrrrrrrr</span>
+                        </div>
+
+                        <div *ngIf="getDetail?.errors?.['textContainsDefaultValue']">
+                            <span>{{ this.errorList[2] }}cccccccccccccccccccccccccc</span>
+                        </div>
+
+                        <div *ngIf="getDetail?.errors?.['textContainsCreateTableValue']">
+                            <span>{{ this.errorList[2] }}dddddddddddddddddd</span>
+                        </div>
                     </div>
                 </div>
             </div>
-        </div>
 
-        <div *ngIf="startValidation" class="mt-2 border">
-            <div *ngIf="getDetail?.invalid && (getDetail?.dirty || getDetail?.touched)" class="alert alert-warning" role="alert">
-                <div *ngIf="getDetail?.errors?.['textContainsInicialValue']">The detail is invalid.</div>
-                <div *ngIf="getDetail?.errors?.['required'] || getDetail?.errors?.['notOnlyWhitespace']">The detail is empty.</div>
-                <div *ngIf="getDetail?.errors?.['minlength']">The detail must be at least 2 characters long.</div>
-            </div>
         </div>
-
-    </div>
-</form>
+    </form>
+</div>
 
 <page-end></page-end>

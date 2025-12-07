@@ -1,4 +1,4 @@
-import {Component, inject, OnInit} from '@angular/core';
+import {Component, ElementRef, inject, OnInit, ViewChild} from '@angular/core';
 import {Hyperparameters} from "../../../shared/interface/hyperparameters";
 import {ArchetypeService} from "../../../core/services/archetype.service";
 import {PageEnterpriseComponent} from "../page-enterprise/page-enterprise.component";
@@ -12,14 +12,22 @@ import {ENVIRONMENT} from 'src/environments/environment';
     styleUrl: './page-end.component.css'
 })
 export class PageEndComponent implements OnInit {
+
+    @ViewChild('txtFooter') txtFooter!: ElementRef<HTMLParagraphElement>;
+
     public readonly footer: Hyperparameters = {data: ''};
-    private readonly archetypeService = inject(ArchetypeService);
+    private readonly archetypeService: ArchetypeService = inject(ArchetypeService);
 
     ngOnInit(): void {
-        this.setFooter();
+        this.txtEnterpriseInitialize();
     }
 
     private async setFooter(): Promise<void> {
-        this.footer.data = await this.archetypeService.getData(`${ENVIRONMENT.basePath}${ENVIRONMENT.endpoints.footer}`);
+        const url: string = `${ENVIRONMENT.basePath}${ENVIRONMENT.endpoints.footer}`;
+        this.footer.data = await this.archetypeService.getData(url);
+    }
+
+    private txtEnterpriseInitialize(): void {
+        this.setFooter();
     }
 }
