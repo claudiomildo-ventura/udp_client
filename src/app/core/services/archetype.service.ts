@@ -17,7 +17,7 @@ export class ArchetypeService {
                 this.httpclientService.getMapping$<ApiResponse<T>>(url).pipe(
                     timeout(this.timeOut),
                     catchError(ex => {
-                        return throwError(() => new Error(`getData failed: ${ex?.message ?? ex}`));
+                        return throwError(() => new Error(`getMapping failed: ${ex?.message ?? ex}`));
                     })
                 )
             );
@@ -33,7 +33,7 @@ export class ArchetypeService {
                 this.httpclientService.postMapping$<ApiResponse<T>>(url, body, options).pipe(
                     timeout(this.timeOut),
                     catchError(ex => {
-                        return throwError(() => new Error(`postData failed: ${ex?.message ?? ex}`));
+                        return throwError(() => new Error(`postMapping failed: ${ex?.message ?? ex}`));
                     })
                 )
             );

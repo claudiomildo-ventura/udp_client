@@ -18,28 +18,19 @@ export class Interceptor implements HttpInterceptor {
             headers = headers.set('X-Api-Version', apiVersion);
         }
 
-        if (contentLanguage) {
-            headers = headers.set('Content-Language', contentLanguage);
-        }
-
-        headers = headers.set('X-Request-Id', crypto.randomUUID());
-
+        headers = headers.set('X-Request-Id', crypto.randomUUID().replace(/-/g, ''));
         if (useAuth) {
-            const token = this.getToken();
+            const token: string | null = this.getToken();
             if (token) {
                 headers = headers.set('Authorization', `Bearer ${token}`);
             }
         }
 
-        const isBodyRequest = ['POST', 'PUT', 'PATCH'].includes(req.method);
-        if (isBodyRequest && !headers.has('Content-Type')) {
-            headers = headers.set('Content-Type', 'application/json');
-        }
-
-        return next.handle(req.clone({ headers }));
+        return next.handle(req.clone({headers}));
     }
 
     private getToken(): string | null {
-        return "gavw478234278923fhehfhf"; // create a function to get it from localstorage.
+        let fakeToken: string = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9"; // create a function to get it from localstorage.
+        return fakeToken;
     }
 }
