@@ -3,6 +3,8 @@ import {ArchetypeService} from "../../../core/services/archetype.service";
 import {ApiResponse} from "../../../shared/interface/ApiResponse";
 import {ENVIRONMENT} from 'src/environments/environment';
 import {UpperCasePipe} from "@angular/common";
+import {SessionService} from "../../../core/services/session-storage.service";
+import {SESSION_SERVICE} from "../../../../config/session-service";
 
 @Component({
     selector: 'page-title',
@@ -16,6 +18,7 @@ export class PageTitleComponent implements OnInit {
     @ViewChild('txtTitle') txtTitle!: ElementRef<HTMLSpanElement>;
 
     public readonly title: ApiResponse<any> = {data: ''};
+    private readonly sessionService: SessionService = inject(SessionService);
     private readonly archetypeService: ArchetypeService = inject(ArchetypeService);
 
     ngOnInit(): void {
@@ -25,9 +28,11 @@ export class PageTitleComponent implements OnInit {
     private async setTitle(): Promise<void> {
         const url: string = `${ENVIRONMENT.basePath}${ENVIRONMENT.endpoints.title}`;
         this.title.data = await this.archetypeService.getMapping(url);
+        this.sessionService.setItem(SESSION_SERVICE.application_title, this.title.data);
     }
 
     private txtTitleInitialize(): void {
+        this.sessionService.clear();
         this.setTitle();
     }
 }

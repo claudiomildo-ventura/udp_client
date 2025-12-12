@@ -6,11 +6,9 @@ import {ArchetypeService} from "../../../core/services/archetype.service";
 import {CommonModule} from "@angular/common";
 import {ENVIRONMENT} from 'src/environments/environment';
 import {StringFunc} from 'src/app/shared/string-utils/StringFunc';
-import {Router} from "@angular/router";
 import {PageTitleComponent} from "../page-title/page-title.component";
 import {PageEndComponent} from "../page-end/page-end.component";
 import {NUMBER_CONSTANT} from "../../../shared/NumberConstant";
-import {TECHNICAL_LOGGER} from "../../../../config/technical_logger";
 
 @Component({
     selector: 'page-home',
@@ -20,12 +18,11 @@ import {TECHNICAL_LOGGER} from "../../../../config/technical_logger";
     styleUrls: ['./page-home.component.css'],
 })
 export class PageHomeComponent implements OnInit, AfterViewInit {
-
+    result: any;
     @ViewChild('btnConfirm') btnConfirm!: ElementRef<HTMLButtonElement>;
     @ViewChild('txtDetail') txtDetail!: ElementRef<HTMLTextAreaElement>;
     @ViewChild('txtFile') txtFile!: ElementRef<HTMLInputElement>;
 
-    private readonly router: Router = inject(Router);
     private readonly formBuilder: FormBuilder = inject(FormBuilder);
     private readonly archetypeService: ArchetypeService = inject(ArchetypeService);
 
@@ -45,13 +42,10 @@ export class PageHomeComponent implements OnInit, AfterViewInit {
         this.errorListInitialize();
     }
 
-    onEnter(event: KeyboardEvent): void {
-        TECHNICAL_LOGGER.info("It's here")
-
-        /*if (event.key === 'Enter') {
-            event.preventDefault();
-            this.submit();
-        }*/
+    private async sendData(auxs: string): Promise<void> {
+        const url: string = `${ENVIRONMENT.basePath}${ENVIRONMENT.endpoints.structure}`;
+        const aux = {data: auxs};
+        await this.archetypeService.postMapping(url, aux);
     }
 
     public submit(): void {
@@ -63,13 +57,6 @@ export class PageHomeComponent implements OnInit, AfterViewInit {
                 TECHNICAL_LOGGER.info(`Navigation result: ${success}`);
             });*/
         }
-    }
-
-    private async sendData(auxs: string): Promise<void> {
-        const url: string = `${ENVIRONMENT.basePath}${ENVIRONMENT.endpoints.structure}`;
-        const aux = {data: auxs};
-TECHNICAL_LOGGER.info(aux);
-        await this.archetypeService.postMapping(url, aux);
     }
 
     public onFileSelected(event: Event): void {
@@ -88,12 +75,12 @@ TECHNICAL_LOGGER.info(aux);
         reader.readAsText(file);
     }
 
-    public get getDetail(): FormControl<string> {
+    public get getDetailForm(): FormControl<string> {
         return this.frmHomePage.get('group1.detail') as FormControl<string>;
     }
 
     public get errorMessage(): string | null {
-        const error: ValidationErrors | null = this.getDetail?.errors;
+        const error: ValidationErrors | null = this.getDetailForm?.errors;
 
         if (!error) return null;
 
@@ -102,11 +89,6 @@ TECHNICAL_LOGGER.info(aux);
         if (error['textContainsDefaultValue'] || error['textContainsCreateTableValue']) return this.errorList[2];
 
         return null;
-    }
-
-    private async setDetail(): Promise<void> {
-        const url: string = `${ENVIRONMENT.basePath}${ENVIRONMENT.endpoints.detail}`;
-        this.detail.data = await this.archetypeService.getMapping(url);
     }
 
     private frmHomePageInitialize(): void {
@@ -160,5 +142,10 @@ TECHNICAL_LOGGER.info(aux);
         detail.updateValueAndValidity({onlySelf: true});
         this.btnConfirm.nativeElement.disabled = false;
         this.btnConfirm.nativeElement.focus();
+    }
+
+    private async setDetail(): Promise<void> {
+        const url: string = `${ENVIRONMENT.basePath}${ENVIRONMENT.endpoints.detail}`;
+        this.detail.data = await this.archetypeService.getMapping(url);
     }
 }
