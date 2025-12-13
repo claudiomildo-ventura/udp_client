@@ -11,7 +11,7 @@ import {SelectionModel} from "@angular/cdk/collections";
 import {MatCheckbox} from "@angular/material/checkbox";
 import {PageEndComponent} from "../../dashboard-view/page-end/page-end.component";
 import {Table} from "../../../shared/interface/Table";
-import {MatCard, MatCardActions, MatCardHeader, MatCardSubtitle, MatCardTitle} from "@angular/material/card";
+import {MatCard, MatCardActions, MatCardContent, MatCardHeader, MatCardSubtitle, MatCardTitle} from "@angular/material/card";
 import {Field} from "../../../shared/interface/Field";
 import {MatProgressSpinnerModule} from "@angular/material/progress-spinner";
 
@@ -29,7 +29,7 @@ import {MatProgressSpinnerModule} from "@angular/material/progress-spinner";
         MatCardHeader,
         MatCard,
         MatCardActions,
-        MatProgressSpinnerModule],
+        MatProgressSpinnerModule, MatCardContent, MatSort],
     templateUrl: './page-structure.component.html',
     styleUrl: './archetype-structure-app.component.css'
 })
@@ -39,11 +39,10 @@ export class PageStructureComponent implements OnInit, AfterViewInit {
     private detailContent: unknown;
     public readonly obj: ApiResponse<any> = {data: ''};
     private readonly archetypeService: ArchetypeService = inject(ArchetypeService);
-    public readonly selectionModel: SelectionModel<Field> = new SelectionModel<Field>(true, []); // true = multiple selection
+    public selectionModel: SelectionModel<Field> = new SelectionModel<Field>(true, []);
 
     public tables: any[] = [];
     dtsTablesCols: string[] = ['id', 'name', 'fields'];
-    dtsTablesColsWithSelect: string[] = ['select', ...this.dtsTablesCols];
     public dtsTables: MatTableDataSource<any> = new MatTableDataSource<any>();
 
     public isPageLoading: boolean = true;
@@ -54,7 +53,7 @@ export class PageStructureComponent implements OnInit, AfterViewInit {
     }
 
     ngAfterViewInit(): void {
-        this.initializeSpinner();
+        this.initializeProgressBar();
     }
 
     public toggleRow(row: any): void {
@@ -77,7 +76,7 @@ export class PageStructureComponent implements OnInit, AfterViewInit {
         return this.detailContent = detail as string;
     }
 
-    private initializeSpinner(): void{
+    private initializeProgressBar(): void {
         setTimeout((): void => {
             this.dataPost();
             this.isPageLoading = false;
@@ -87,8 +86,16 @@ export class PageStructureComponent implements OnInit, AfterViewInit {
     private initializeForm(tablesResponse: TableResponse): void {
         this.tables = tablesResponse.tables;
         this.dtsTables = new MatTableDataSource<Table>(this.tables);
+        this.dataSourceSort();
+        this.selectingAllCheckboxesOnLoad();
+    }
+
+    private dataSourceSort(): void {
         this.dtsTables.sort = this.sort;
-        this.dtsTables.data.forEach(row => this.selectionModel.select(row));
+    }
+
+    private selectingAllCheckboxesOnLoad(): void {
+        this.selectionModel.select(...this.tables.flatMap(t => t.fields));
     }
 
     private async dataPost(): Promise<void> {

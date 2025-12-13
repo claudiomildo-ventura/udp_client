@@ -2,27 +2,19 @@ table {
     width: 70%;
     margin: 20px auto;
 }
-
-h2 {
-    text-align: center;
-    margin-top: 30px;
-}
-
-p {
-    text-align: center;
-    margin-bottom: 20px;
-}
-
 .fields-container {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 8px;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr); /* 3 equal columns */
+    gap: 16px;
 }
 
 .field-card {
-    min-width: 150px;
-    max-width: 220px;
-    flex: 1 1 auto;
+    min-height: 120px;
+    padding: 12px;
+    box-sizing: border-box;
+
+    white-space: nowrap;    /* no line breaks */
+    overflow: visible;      /* allow card to expand if needed */
 }
 
 .loading-overlay {
