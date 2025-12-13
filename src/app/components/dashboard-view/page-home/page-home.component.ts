@@ -64,7 +64,7 @@ export class PageHomeComponent implements OnInit {
         return null;
     }
 
-    submit(): void {
+    public submit(): void {
         if (this.frmHomePage.valid) {
             const group1Values = this.frmHomePage.get('group1')?.value;
             this.navigateToPageStructure(StringFunc.encodeBase64(group1Values.detail));
@@ -74,7 +74,7 @@ export class PageHomeComponent implements OnInit {
         }
     }
 
-    onFileSelected(event: Event): void {
+    public onFileSelected(event: Event): void {
         const input = event.target as HTMLInputElement;
         const file = input.files?.[0];
         if (!file) return;
@@ -114,15 +114,15 @@ export class PageHomeComponent implements OnInit {
         ];
     }
 
-    private async loadDetail(): Promise<void> {
-        const url = `${ENVIRONMENT.basePath}${ENVIRONMENT.endpoints.detail}`;
-        this.detail.data = await this.archetypeService.getMapping(url);
-        this.detailControl?.setValue(this.detail.data);
-    }
-
     private navigateToPageStructure(content: string): void {
         this.router.navigate(['/page-structure'], {
             state: {detailContent: content}
         }).then(success => TECHNICAL_LOGGER.info(`Navigation result: ${success}`));
+    }
+
+    private async loadDetail(): Promise<void> {
+        const url = `${ENVIRONMENT.basePath}${ENVIRONMENT.endpoints.detail}`;
+        this.detail.data = await this.archetypeService.getMapping(url);
+        this.detailControl?.setValue(this.detail.data);
     }
 }
