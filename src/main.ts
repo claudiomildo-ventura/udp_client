@@ -17,6 +17,7 @@ import {ROUTES} from "./app/app.route";
 import {ERROR_ROUTES} from "./app/core/error/error.route";
 import {TECHNICAL_LOGGER} from "./config/technical-logger";
 import {Interceptor} from "./app/core/interceptor/interceptor";
+import { provideAnimations } from '@angular/platform-browser/animations';
 
 export const ALL_ROUTES: Route[] = [...ROUTES, ...ERROR_ROUTES];
 
@@ -27,11 +28,12 @@ if (ENVIRONMENT.production) {
 }
 
 bootstrapApplication(AppComponent, {
-    providers: [{
-        provide: HTTP_INTERCEPTORS,
-        useClass: Interceptor,
-        multi: true
-    },
+    providers: [
+        provideAnimations(), // for Angular Material
+        {
+            provide: HTTP_INTERCEPTORS, useClass: Interceptor,
+            multi: true
+        },
         provideHttpClient(withInterceptorsFromDi()),
         provideRouter(ALL_ROUTES,
             withPreloading(PreloadAllModules),
@@ -41,4 +43,4 @@ bootstrapApplication(AppComponent, {
             })
         ),
     ]
-});
+}).then(r => console.log(r));

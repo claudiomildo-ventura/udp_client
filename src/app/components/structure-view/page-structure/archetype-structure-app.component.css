@@ -12,3 +12,15 @@ p {
     text-align: center;
     margin-bottom: 20px;
 }
+
+.fields-container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px; /* espaçamento entre os cards */
+}
+
+.field-card {
+    min-width: 150px;
+    max-width: 220px;
+    flex: 1 1 auto;
+}
