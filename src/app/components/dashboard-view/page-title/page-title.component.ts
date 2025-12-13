@@ -10,7 +10,10 @@ import {MatCard} from "@angular/material/card";
 @Component({
     selector: 'page-title',
     standalone: true,
-    imports: [UpperCasePipe, MatCard],
+    imports: [
+        UpperCasePipe,
+        MatCard
+    ],
     templateUrl: './page-title.component.html',
     styleUrls: ['./page-title.component.css']
 })

@@ -14,11 +14,13 @@ import {Table} from "../../../shared/interface/Table";
 import {MatCard, MatCardActions, MatCardContent, MatCardHeader, MatCardSubtitle, MatCardTitle} from "@angular/material/card";
 import {Field} from "../../../shared/interface/Field";
 import {MatProgressSpinnerModule} from "@angular/material/progress-spinner";
+import {FormGroup, FormsModule, ReactiveFormsModule} from "@angular/forms";
 
 @Component({
     selector: 'page-structure',
     standalone: true,
-    imports: [CommonModule,
+    imports: [
+        CommonModule,
         MatTable,
         MatTableModule,
         PageTitleComponent,
@@ -29,20 +31,26 @@ import {MatProgressSpinnerModule} from "@angular/material/progress-spinner";
         MatCardHeader,
         MatCard,
         MatCardActions,
-        MatProgressSpinnerModule, MatCardContent, MatSort],
+        MatProgressSpinnerModule,
+        MatCardContent,
+        MatSort,
+        FormsModule,
+        ReactiveFormsModule
+    ],
     templateUrl: './page-structure.component.html',
     styleUrl: './archetype-structure-app.component.css'
 })
 export class PageStructureComponent implements OnInit, AfterViewInit {
     @ViewChild(MatSort) sort!: MatSort;
 
+    frmStructurePage!: FormGroup;
     private detailContent: unknown;
     public readonly obj: ApiResponse<any> = {data: ''};
     private readonly archetypeService: ArchetypeService = inject(ArchetypeService);
     public selectionModel: SelectionModel<Field> = new SelectionModel<Field>(true, []);
 
     public tables: any[] = [];
-    dtsTablesCols: string[] = ['id', 'name', 'fields'];
+    dtsTablesCols: string[] = ['fields'];
     public dtsTables: MatTableDataSource<any> = new MatTableDataSource<any>();
 
     public isPageLoading: boolean = true;
@@ -102,5 +110,9 @@ export class PageStructureComponent implements OnInit, AfterViewInit {
         const url: string = `${ENVIRONMENT.basePath}${ENVIRONMENT.endpoints.structure}`;
         const response: TableResponse = await this.archetypeService.postMapping<TableResponse>(url, {data: this.detailContent});
         this.initializeForm(response);
+    }
+
+    public submit(): void {
+
     }
 }

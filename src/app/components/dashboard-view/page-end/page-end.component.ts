@@ -8,7 +8,10 @@ import {MatCard} from "@angular/material/card";
 @Component({
     selector: 'page-end',
     standalone: true,
-    imports: [PageEnterpriseComponent, MatCard],
+    imports: [
+        PageEnterpriseComponent,
+        MatCard
+    ],
     templateUrl: './page-end.component.html',
     styleUrl: './page-end.component.css'
 })

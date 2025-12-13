@@ -5,64 +5,53 @@
 <page-title></page-title>
 
 <div class="table-container mt-3">
-    <table mat-table [dataSource]="dtsTables" matSort class="mat-elevation-z8">
-        <!-- ID da Tabela -->
-        <ng-container matColumnDef="id">
-            <th mat-header-cell *matHeaderCellDef> </th>
-            <td mat-cell *matCellDef="let table"> {{ table.id }}</td>
-        </ng-container>
+    <form [formGroup]="frmStructurePage" (ngSubmit)="submit()">
+        <table mat-table [dataSource]="dtsTables" matSort class="mat-elevation-z8">
 
-        <!-- Nome da Tabela -->
-        <ng-container matColumnDef="name">
-            <th mat-header-cell *matHeaderCellDef> </th>
-            <td mat-cell class="fw-bold" *matCellDef="let table"> {{ table.name | uppercase }}</td>
-        </ng-container>
+            <!-- Fields -->
+            <ng-container matColumnDef="fields">
+                <td mat-cell *matCellDef="let table" class="pb-4">
 
-        <!-- Fields -->
-        <ng-container matColumnDef="fields" >
-            <th mat-header-cell *matHeaderCellDef></th>
-            <td mat-cell *matCellDef="let table" class="pb-2">
+                    <mat-checkbox (change)="$event ? masterToggle(table) : null" [checked]="isAllSelected(table)">
+                        {{ table.id }} - {{ table.name | uppercase }}
+                    </mat-checkbox>
 
-                <!-- Checkbox “Select All” -->
-                <mat-checkbox (change)="$event ? masterToggle(table) : null" [checked]="isAllSelected(table)">
-                    Select All
-                </mat-checkbox>
+                    <div class="fields-container">
+                        <mat-card *ngFor="let field of table.fields" class="field-card mat-elevation-z2" appearance="outlined">
 
-                <div class="fields-container">
-                    <mat-card *ngFor="let field of table.fields" class="field-card mat-elevation-z2" appearance="outlined">
+                            <mat-card-header>
+                                <mat-card-title class="fw-bold"> {{ field.name | uppercase }}</mat-card-title>
+                                <mat-card-subtitle>Type: {{ field.type }}</mat-card-subtitle>
+                                <mat-card-subtitle>Length: {{ field.length }}</mat-card-subtitle>
+                                <mat-card-subtitle>Auto Created: {{ field.isAutoCreated }}</mat-card-subtitle>
+                                <mat-card-subtitle>Is Key: {{ field.isKey }}</mat-card-subtitle>
+                                <mat-card-subtitle>Is not null: {{ field.isNotNull }}</mat-card-subtitle>
+                            </mat-card-header>
 
-                        <mat-card-header>
-                            <mat-card-title class="fw-bold"> {{ field.name | uppercase }}</mat-card-title>
-                            <mat-card-subtitle>Type: {{ field.type }}</mat-card-subtitle>
-                            <mat-card-subtitle>Length: {{ field.length }}</mat-card-subtitle>
-                        </mat-card-header>
+                            <mat-card-content>
+                                <!-- optional content here -->
+                            </mat-card-content>
 
-                        <mat-card-content>
-                            <!-- optional content here -->
-                        </mat-card-content>
+                            <mat-card-actions class="actions-bottom">
+                                <mat-checkbox
+                                    color="primary"
+                                    (click)="$event.stopPropagation()"
+                                    (change)="$event ? toggleRow(field) : null"
+                                    [checked]="selectionModel.isSelected(field)">
+                                </mat-checkbox>
+                            </mat-card-actions>
 
-                        <mat-card-actions class="actions-bottom">
-                            <mat-checkbox
-                                color="primary"
-                                (click)="$event.stopPropagation()"
-                                (change)="$event ? toggleRow(field) : null"
-                                [checked]="selectionModel.isSelected(field)">
-                            </mat-checkbox>
-                        </mat-card-actions>
+                        </mat-card>
+                    </div>
 
-                    </mat-card>
-                </div>
+                </td>
+            </ng-container>
+            <tr mat-row *matRowDef="let row; columns: dtsTablesCols"></tr>
+        </table>
 
-            </td>
-        </ng-container>
+        <div *ngIf="isPageLoading" class="table-overlay"></div>
 
-        <tr mat-header-row *matHeaderRowDef="dtsTablesCols"></tr>
-        <tr mat-row *matRowDef="let row; columns: dtsTablesCols"></tr>
-
-    </table>
-
-    <div *ngIf="isPageLoading" class="table-overlay"></div>
-
+    </form>
 </div>
 
 <page-end></page-end>

@@ -8,7 +8,11 @@ import {MessageDialogInformation} from "../../shared/interface/MessageDialogInfo
 @Component({
     selector: 'app-message-dialog',
     standalone: true,
-    imports: [CommonModule, MatDialogModule, MatButtonModule],
+    imports: [
+        CommonModule,
+        MatDialogModule,
+        MatButtonModule
+    ],
     templateUrl: './message-dialog.component.html',
     styleUrl: './message-dialog.component.css'
 })
