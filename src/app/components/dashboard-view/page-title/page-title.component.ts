@@ -5,16 +5,16 @@ import {ENVIRONMENT} from 'src/environments/environment';
 import {UpperCasePipe} from "@angular/common";
 import {SessionService} from "../../../core/services/session-storage.service";
 import {SESSION_SERVICE} from "../../../../config/session-service";
+import {MatCard} from "@angular/material/card";
 
 @Component({
     selector: 'page-title',
     standalone: true,
-    imports: [UpperCasePipe],
+    imports: [UpperCasePipe, MatCard],
     templateUrl: './page-title.component.html',
     styleUrls: ['./page-title.component.css']
 })
 export class PageTitleComponent implements OnInit {
-
     @ViewChild('txtTitle') txtTitle!: ElementRef<HTMLSpanElement>;
 
     public readonly title: ApiResponse<any> = {data: ''};

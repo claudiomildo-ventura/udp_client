@@ -3,11 +3,12 @@ import {ApiResponse} from "../../../shared/interface/ApiResponse";
 import {ArchetypeService} from "../../../core/services/archetype.service";
 import {PageEnterpriseComponent} from "../page-enterprise/page-enterprise.component";
 import {ENVIRONMENT} from 'src/environments/environment';
+import {MatCard} from "@angular/material/card";
 
 @Component({
     selector: 'page-end',
     standalone: true,
-    imports: [PageEnterpriseComponent],
+    imports: [PageEnterpriseComponent, MatCard],
     templateUrl: './page-end.component.html',
     styleUrl: './page-end.component.css'
 })

@@ -1,8 +1,10 @@
 <div class="row">
-    <footer class="py-3">
-        <p #txtFooter>
-            {{ this.footer.data }}
-        </p>
-        <page-enterprise></page-enterprise>
-    </footer>
+    <div class="col-12 mt-3">
+        <mat-card elevation="2" class="p-1 text-center">
+            <p #txtFooter class="mb-2">
+                {{ footer.data }}
+            </p>
+            <page-enterprise></page-enterprise>
+        </mat-card>
+    </div>
 </div>

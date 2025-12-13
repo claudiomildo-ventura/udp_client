@@ -2,11 +2,14 @@ import {Component, ElementRef, inject, OnInit, ViewChild} from '@angular/core';
 import {ApiResponse} from "../../../shared/interface/ApiResponse";
 import {ArchetypeService} from "../../../core/services/archetype.service";
 import {ENVIRONMENT} from "../../../../environments/environment";
+import {MatCard} from "@angular/material/card";
 
 @Component({
     selector: 'page-enterprise',
     standalone: true,
-    imports: [],
+    imports: [
+        MatCard
+    ],
     templateUrl: './page-enterprise.component.html',
     styleUrl: './page-enterprise.component.css'
 })

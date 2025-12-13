@@ -1,90 +1,60 @@
-import {AfterViewInit, Component, ElementRef, inject, OnInit, ViewChild} from '@angular/core';
-import {FormBuilder, FormControl, FormGroup, FormsModule, ReactiveFormsModule, ValidationErrors, Validators} from '@angular/forms';
+import {Component, inject, OnInit} from '@angular/core';
+import {FormBuilder, FormGroup, ReactiveFormsModule, Validators} from '@angular/forms';
 import {PageHomeValidation} from 'src/app/shared/validator/PageHomeValidation';
 import {ApiResponse} from "../../../shared/interface/ApiResponse";
 import {ArchetypeService} from "../../../core/services/archetype.service";
-import {CommonModule} from "@angular/common";
 import {ENVIRONMENT} from 'src/environments/environment';
 import {StringFunc} from 'src/app/shared/string-utils/StringFunc';
-import {PageTitleComponent} from "../page-title/page-title.component";
-import {PageEndComponent} from "../page-end/page-end.component";
 import {NUMBER_CONSTANT} from "../../../shared/NumberConstant";
-import {TableResponse} from "../../../shared/interface/TablesResponse";
+import {Router} from "@angular/router";
+import {TECHNICAL_LOGGER} from "../../../../config/technical-logger";
+import {PageEndComponent} from "../page-end/page-end.component";
+import {PageTitleComponent} from "../page-title/page-title.component";
+import {MatFormFieldModule} from "@angular/material/form-field";
+import {MatInputModule} from "@angular/material/input";
+import {MatButtonModule} from "@angular/material/button";
+import {MatIconModule} from "@angular/material/icon";
+import {MatCardModule} from "@angular/material/card";
 
 @Component({
     selector: 'page-home',
     standalone: true,
-    imports: [CommonModule, FormsModule, ReactiveFormsModule, PageTitleComponent, PageEndComponent],
+    imports: [
+        PageEndComponent,
+        PageTitleComponent,
+        ReactiveFormsModule,
+        MatFormFieldModule,
+        MatInputModule,
+        MatButtonModule,
+        MatIconModule,
+        MatCardModule
+    ],
     templateUrl: './page-home.component.html',
     styleUrls: ['./page-home.component.css'],
 })
-export class PageHomeComponent implements OnInit, AfterViewInit {
-    result: any;
-    @ViewChild('btnConfirm') btnConfirm!: ElementRef<HTMLButtonElement>;
-    @ViewChild('txtDetail') txtDetail!: ElementRef<HTMLTextAreaElement>;
-    @ViewChild('txtFile') txtFile!: ElementRef<HTMLInputElement>;
-
+export class PageHomeComponent implements OnInit {
     private readonly formBuilder: FormBuilder = inject(FormBuilder);
+    private readonly router: Router = inject(Router);
     private readonly archetypeService: ArchetypeService = inject(ArchetypeService);
 
-    public detail: ApiResponse<any> = {data: ''};
-    public frmHomePage!: FormGroup;
-    public startValidation: boolean = false;
-
-    public errorList: Array<string> = [];
+    frmHomePage!: FormGroup;
+    startValidation = false;
+    selectedFileName = '';
+    detail: ApiResponse<any> = {data: ''};
+    errorList: string[] = [];
 
     ngOnInit(): void {
-        this.frmHomePageInitialize();
+        this.initializeForm();
+        this.initializeErrors();
+        this.loadDetail();
     }
 
-    ngAfterViewInit(): void {
-        this.txtDetailInitialize();
-        this.btnConfirmInitialize();
-        this.errorListInitialize();
+    get detailControl() {
+        return this.frmHomePage.get('group1.detail');
     }
 
-    private async sendData(auxs: string): Promise<void> {
-        const url: string = `${ENVIRONMENT.basePath}${ENVIRONMENT.endpoints.structure}`;
-        const aux = {data: auxs};
-        const tableResponse: TableResponse = await this.archetypeService.postMapping<TableResponse>(url, aux);
-        console.log(tableResponse.tables[0].fields);      // all fields
-        console.log(tableResponse.tables[0].fields.filter(f => f.isKey)); // ONLY PK fields
-    }
-
-    public submit(): void {
-        if (this.frmHomePageValidate(this.frmHomePage)) {
-            const group1Values: any = this.frmHomePage.get('group1')?.value ?? null;
-            const result = StringFunc.encodeBase64(group1Values.detail);
-            this.sendData(result);
-            /*this.router.navigate(['/page-structure'], { state: {detailContent: result}}).then((success: boolean): void => {
-                TECHNICAL_LOGGER.info(`Navigation result: ${success}`);
-            });*/
-        }
-    }
-
-    public onFileSelected(event: Event): void {
-        const input = event.target as HTMLInputElement;
-        const file = input.files?.[0];
-
-        if (!file) return;
-
-        const reader = new FileReader();
-
-        reader.onload = () => {
-            const text = reader.result as string;
-            this.txtDetailGetFormContent(text);
-        };
-
-        reader.readAsText(file);
-    }
-
-    public get getDetailForm(): FormControl<string> {
-        return this.frmHomePage.get('group1.detail') as FormControl<string>;
-    }
-
-    public get errorMessage(): string | null {
-        const error: ValidationErrors | null = this.getDetailForm?.errors;
-
+    get errorMessage(): string | null {
+        const error = this.detailControl?.errors;
         if (!error) return null;
 
         if (error['minlength']) return this.errorList[0];
@@ -94,61 +64,65 @@ export class PageHomeComponent implements OnInit, AfterViewInit {
         return null;
     }
 
-    private frmHomePageInitialize(): void {
+    public submit(): void {
+        if (this.frmHomePage.valid) {
+            const group1Values = this.frmHomePage.get('group1')?.value;
+            this.navigateToPageStructure(StringFunc.encodeBase64(group1Values.detail));
+        } else {
+            this.startValidation = true;
+            this.frmHomePage.markAllAsTouched();
+        }
+    }
+
+    public onFileSelected(event: Event): void {
+        const input = event.target as HTMLInputElement;
+        const file = input.files?.[0];
+        if (!file) return;
+
+        this.selectedFileName = file.name;
+
+        const reader = new FileReader();
+        reader.onload = () => {
+            this.detailControl?.setValue(reader.result as string);
+            this.detailControl?.updateValueAndValidity();
+        };
+        reader.readAsText(file);
+    }
+
+    private initializeForm(): void {
         this.frmHomePage = this.formBuilder.group({
             group1: this.formBuilder.group({
-                detail: new FormControl(StringFunc.STRING_EMPTY,
+                detail: [
+                    StringFunc.STRING_EMPTY,
                     [
                         Validators.required,
                         Validators.minLength(NUMBER_CONSTANT.INITIALIZE_WITH_2),
                         PageHomeValidation.textContainsValue,
                         PageHomeValidation.textContainsDefaultValue,
                         PageHomeValidation.textContainsCreateTableValue
-                    ]),
-            }),
+                    ]
+                ]
+            })
         });
     }
 
-    private frmHomePageValidate(form: FormGroup<any>): boolean {
-        if (form.invalid) {
-            this.startValidation = true;
-            form.markAllAsTouched();
-            return false;
-        }
-
-        return true;
-    }
-
-    private txtDetailInitialize(): void {
-        this.setDetail();
-        this.txtDetail.nativeElement.readOnly = true;
-        this.txtDetail.nativeElement.focus();
-    }
-
-    private btnConfirmInitialize(): void {
-        this.btnConfirm.nativeElement.title = 'Create the Structure';
-        this.btnConfirm.nativeElement.style.width = '70px';
-        this.btnConfirm.nativeElement.disabled = true;
-    }
-
-    private errorListInitialize(): void {
-        this.errorList = Array.of(
+    private initializeErrors(): void {
+        this.errorList = [
             'The detail content must be at least 2 characters long.',
-            'The detail content is empty for generate the structure.',
-            'The detail content is invalid for generate the structure.'
-        );
+            'The detail content is empty for generating the structure.',
+            'The detail content is invalid for generating the structure.'
+        ];
     }
 
-    private txtDetailGetFormContent(content: string): void {
-        const detail = this.frmHomePage.get(['group1', 'detail']) as FormControl<string>;
-        detail.setValue(content, {emitEvent: true});
-        detail.updateValueAndValidity({onlySelf: true});
-        this.btnConfirm.nativeElement.disabled = false;
-        this.btnConfirm.nativeElement.focus();
+    private navigateToPageStructure(content: string): void {
+        this.router.navigate(['/page-structure'], {
+            state: {detailContent: content}
+        }).then(success => TECHNICAL_LOGGER.info(`Navigation result: ${success}`));
     }
 
-    private async setDetail(): Promise<void> {
-        const url: string = `${ENVIRONMENT.basePath}${ENVIRONMENT.endpoints.detail}`;
+    private async loadDetail(): Promise<void> {
+        const url = `${ENVIRONMENT.basePath}${ENVIRONMENT.endpoints.detail}`;
         this.detail.data = await this.archetypeService.getMapping(url);
+        this.detailControl?.setValue(this.detail.data);
     }
 }
