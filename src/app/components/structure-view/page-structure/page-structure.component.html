@@ -3,36 +3,56 @@
 <div *ngIf="tableData && tableData.length > 0">
 
     <h2>Table: {{ tableData[0].name }}</h2>
-    <p>Auto Created: {{ tableData[0].isAutoCreated }}</p>
 
     <table mat-table [dataSource]="dataSource" matSort class="mat-elevation-z8">
 
+        <!-- Checkbox Column -->
+        <ng-container matColumnDef="select">
+            <th mat-header-cell *matHeaderCellDef>
+                <mat-checkbox
+                    color="primary"
+                    (change)="$event ? masterToggle() : null"
+                    [checked]="selection.hasValue() && isAllSelected()"
+                    [indeterminate]="selection.hasValue() && !isAllSelected()"
+                ></mat-checkbox>
+            </th>
+            <td mat-cell *matCellDef="let row">
+                <mat-checkbox
+                    color="primary"
+                    (click)="$event.stopPropagation()"
+                    (change)="$event ? toggleRow(row) : null"
+                    [checked]="selection.isSelected(row)"
+                ></mat-checkbox>
+            </td>
+        </ng-container>
+
         <!-- ID Column -->
         <ng-container matColumnDef="id">
-            <th mat-header-cell *matHeaderCellDef mat-sort-header> ID</th>
-            <td mat-cell *matCellDef="let element"> {{ element.id }}</td>
+            <th mat-header-cell *matHeaderCellDef mat-sort-header> ID </th>
+            <td mat-cell *matCellDef="let element"> {{ element.id }} </td>
         </ng-container>
 
         <!-- Name Column -->
         <ng-container matColumnDef="name">
-            <th mat-header-cell *matHeaderCellDef mat-sort-header> Name</th>
-            <td mat-cell *matCellDef="let element"> {{ element.name }}</td>
+            <th mat-header-cell *matHeaderCellDef mat-sort-header> Name </th>
+            <td mat-cell *matCellDef="let element"> {{ element.name }} </td>
         </ng-container>
 
         <!-- Type Column -->
         <ng-container matColumnDef="type">
-            <th mat-header-cell *matHeaderCellDef mat-sort-header> Type</th>
-            <td mat-cell *matCellDef="let element"> {{ element.type }}</td>
+            <th mat-header-cell *matHeaderCellDef mat-sort-header> Type </th>
+            <td mat-cell *matCellDef="let element"> {{ element.type }} </td>
         </ng-container>
 
         <!-- Length Column -->
         <ng-container matColumnDef="length">
-            <th mat-header-cell *matHeaderCellDef mat-sort-header> Length</th>
-            <td mat-cell *matCellDef="let element"> {{ element.length }}</td>
+            <th mat-header-cell *matHeaderCellDef mat-sort-header> Length </th>
+            <td mat-cell *matCellDef="let element"> {{ element.length }} </td>
         </ng-container>
 
-        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-        <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+        <!-- Header and Row -->
+        <tr mat-header-row *matHeaderRowDef="displayedColumnsWithSelect"></tr>
+        <tr mat-row *matRowDef="let row; columns: displayedColumnsWithSelect;"></tr>
 
     </table>
 </div>

@@ -5,11 +5,12 @@
 
         <mat-card>
 
-            <mat-card-content>
+            <mat-card-content class="mat-elevation-z0">
 
                 <div formGroupName="group1">
+
                     <!-- Detail Textarea -->
-                    <mat-form-field appearance="fill" class="w-100 mb-3">
+                    <mat-form-field appearance="fill" class="w-100 mb-1">
                         <textarea
                             matInput
                             formControlName="detail"
@@ -20,10 +21,10 @@
                     </mat-form-field>
 
                     <!-- File input + Submit button row -->
-                    <div class="row align-items-center mb-3">
+                    <div class="row align-items-center mb-1">
 
                         <!-- File input button -->
-                        <div class="col-md-6 col-sm-12 mb-2 mb-md-0">
+                        <div class="col-md-6 col-sm-12 mb-1 mb-md-0">
                             <input type="file" hidden #txtFile (change)="onFileSelected($event)" />
                             <button type="button" mat-raised-button color="primary" (click)="txtFile.click()">
                                 Choose File
