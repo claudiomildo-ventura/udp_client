@@ -1,16 +1,20 @@
+<div *ngIf="isPageLoading" class="loading-overlay">
+    <mat-spinner></mat-spinner>
+</div>
+
 <page-title></page-title>
 
-<div>
+<div class="table-container" style="position: relative;">
     <table mat-table [dataSource]="dtsTables" class="mat-elevation-z8" style="width: 90%; margin: auto;">
         <!-- ID da Tabela -->
         <ng-container matColumnDef="id">
-            <th mat-header-cell *matHeaderCellDef> No.</th>
+            <th mat-header-cell *matHeaderCellDef> </th>
             <td mat-cell *matCellDef="let table"> {{ table.id }}</td>
         </ng-container>
 
         <!-- Nome da Tabela -->
         <ng-container matColumnDef="name">
-            <th mat-header-cell *matHeaderCellDef> Entity</th>
+            <th mat-header-cell *matHeaderCellDef> </th>
             <td mat-cell class="fw-bold" *matCellDef="let table"> {{ table.name | uppercase }}</td>
         </ng-container>
 
@@ -51,6 +55,9 @@
         <tr mat-row *matRowDef="let row; columns: dtsTablesCols"></tr>
 
     </table>
+
+    <div *ngIf="isPageLoading" class="table-overlay"></div>
+
 </div>
 
 <page-end></page-end>
