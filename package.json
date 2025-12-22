@@ -1,5 +1,5 @@
 {
-  "name": "UDP_client",
+  "name": "udp_client",
   "version": "0.0.1",
   "description": "This API service is a modernization effort of a legacy application originally developed in Object Pascal (Delphi XE10).",
   "author": "Claudiomildo Ventura",

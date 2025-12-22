@@ -5,11 +5,10 @@
 <div class="table-container mt-3">
     <form [formGroup]="frmStructurePage" (ngSubmit)="submit()">
         <table mat-table [dataSource]="dtsTables" matSort class="mat-elevation-z8">
-            <!-- Fields -->
             <ng-container matColumnDef="fields">
                 <td mat-cell *matCellDef="let table" class="pb-4">
 
-                    <mat-checkbox (change)="$event ? masterToggle(table) : null" [checked]="isAllSelected(table)">
+                    <mat-checkbox (change)="$event ? toggleAll(table) : null" [checked]="isAllSelected(table)">
                         {{ table.id }} - {{ table.name | uppercase }}
                     </mat-checkbox>
 
@@ -50,11 +49,10 @@
         </table>
 
         <div class="col-12">
-            <button
-                type="submit"
-                mat-raised-button
-                color="accent"
-                [disabled]="isPageLoading || frmStructurePage.invalid || selectionModel.selected.length === 0">
+            <button type="submit"
+                    mat-raised-button
+                    color="accent"
+                    [disabled]="isPageLoading || frmStructurePage.invalid || selectionModel.selected.length === 0">
                 <mat-icon *ngIf="!isPageLoading">check</mat-icon>
                 <span *ngIf="!isPageLoading">Submit</span>
                 <mat-progress-spinner *ngIf="isPageLoading" diameter="18" mode="indeterminate"></mat-progress-spinner>

@@ -3,14 +3,14 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
-// CDK
+// CDK.
 import { A11yModule } from '@angular/cdk/a11y';
 import { CdkStepperModule } from '@angular/cdk/stepper';
 import { CdkTableModule } from '@angular/cdk/table';
 import { CdkTreeModule } from '@angular/cdk/tree';
 import { DragDropModule } from '@angular/cdk/drag-drop';
 
-// Angular Material
+// Angular Material.
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import { MatBadgeModule } from '@angular/material/badge';
 import { MatBottomSheetModule } from '@angular/material/bottom-sheet';
@@ -33,7 +33,7 @@ import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatProgressBarModule } from '@angular/material/progress-bar';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MatRadioModule } from '@angular/material/radio';
-import { MatRippleModule } from '@angular/material/core'; // para efeito ripple
+import { MatRippleModule } from '@angular/material/core'; // for ripple effects.
 import { MatSelectModule } from '@angular/material/select';
 import { MatSidenavModule } from '@angular/material/sidenav';
 import { MatSliderModule } from '@angular/material/slider';
@@ -49,14 +49,14 @@ import { MatGridListModule } from '@angular/material/grid-list';
 
 @NgModule({
     imports: [
-        // CDK
+        // CDK.
         A11yModule,
         CdkStepperModule,
         CdkTableModule,
         CdkTreeModule,
         DragDropModule,
 
-        // Material
+        // Material.
         MatAutocompleteModule,
         MatBadgeModule,
         MatBottomSheetModule,

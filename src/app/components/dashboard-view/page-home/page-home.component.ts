@@ -1,5 +1,5 @@
 import {Component, inject, OnInit} from '@angular/core';
-import {FormBuilder, FormGroup, ReactiveFormsModule, Validators} from '@angular/forms';
+import {AbstractControl, FormBuilder, FormGroup, ReactiveFormsModule, Validators} from '@angular/forms';
 import {Validator} from 'src/app/shared/validator/validator';
 import {ApiResponse} from "../../../shared/interface/ApiResponse";
 import {ArchetypeService} from "../../../core/services/archetype.service";
@@ -8,8 +8,6 @@ import {StringFunc} from 'src/app/shared/string-utils/StringFunc';
 import {NUMBER_CONSTANT} from "../../../shared/NumberConstant";
 import {Router} from "@angular/router";
 import {TECHNICAL_LOGGER} from "../../../../config/technical-logger";
-import {PageEndComponent} from "../page-end/page-end.component";
-import {PageTitleComponent} from "../page-title/page-title.component";
 import {CommonModule} from "@angular/common";
 import {MaterialModule} from "../../../material.module";
 
@@ -18,8 +16,6 @@ import {MaterialModule} from "../../../material.module";
     standalone: true,
     imports: [
         CommonModule,
-        PageEndComponent,
-        PageTitleComponent,
         ReactiveFormsModule,
         MaterialModule
     ],
@@ -43,7 +39,7 @@ export class PageHomeComponent implements OnInit {
         this.detailInitialize();
     }
 
-    get detailControl() {
+    get detailControl(): AbstractControl<any, any> | null {
         return this.frmHomePage.get('group1.detail');
     }
 
@@ -59,7 +55,6 @@ export class PageHomeComponent implements OnInit {
     }
 
     public submit(): void {
-        console.log('Submit form home page');
         if (this.frmHomePage.valid) {
             const group1Values: any = this.frmHomePage.get('group1')?.value;
             this.navigateToPageStructure(StringFunc.encodeBase64(group1Values.detail));

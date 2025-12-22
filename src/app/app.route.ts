@@ -1,5 +1,6 @@
 import {Routes} from '@angular/router';
 import {PageHomeComponent} from "./components/dashboard-view/page-home/page-home.component";
+import {ParameterViewComponent} from "./components/parameter-view/parameter-view.component";
 
 export const ROUTES: Routes = [
     {
@@ -20,6 +21,11 @@ export const ROUTES: Routes = [
         title: 'CV IT - structure',
         path: 'page-structure',
         loadComponent: () => import('./components/structure-view/page-structure/page-structure.component').then(m => m.PageStructureComponent)
+    },
+    {
+        title: 'CV IT - parameter',
+        path: 'page-parameter',
+        loadComponent: () => import('./components/parameter-view/parameter-view.component').then(m => m.ParameterViewComponent)
     },
     {
         title: 'Error page',

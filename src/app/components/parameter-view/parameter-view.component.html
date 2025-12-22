@@ -1,0 +1,53 @@
+
+<div class="container mt-3">
+    <form [formGroup]="frmParameterPage" (ngSubmit)="submit()">
+        <mat-card>
+            <mat-card-content class="mat-elevation-z0">
+                <div class="d-flex flex-row justify-content-center align-items-center" style="gap: 16px;">
+
+                    <mat-form-field>
+                        <mat-label>Architectures</mat-label>
+                        <select matNativeControl required>
+                            <option value="volvo">Volvo</option>
+                            <option value="saab">Saab</option>
+                        </select>
+                    </mat-form-field>
+
+                    <mat-form-field>
+                        <mat-label>Databases</mat-label>
+                        <select matNativeControl required>
+                            <option value="volvo">Volvo</option>
+                            <option value="saab">Saab</option>
+                        </select>
+                    </mat-form-field>
+
+                    <mat-form-field>
+                        <mat-label>Databases engineer</mat-label>
+                        <select matNativeControl required>
+                            <option value="volvo">Volvo</option>
+                            <option value="saab">Saab</option>
+                        </select>
+                    </mat-form-field>
+
+                    <mat-form-field>
+                        <mat-label>Environments</mat-label>
+                        <select matNativeControl required>
+                            <option value="volvo">Volvo</option>
+                            <option value="saab">Saab</option>
+                        </select>
+                    </mat-form-field>
+
+                    <mat-form-field>
+                        <mat-label>Scaffolds</mat-label>
+                        <select matNativeControl required>
+                            <option value="volvo">Volvo</option>
+                            <option value="saab">Saab</option>
+                        </select>
+                    </mat-form-field>
+
+                </div>
+            </mat-card-content>
+        </mat-card>
+
+    </form>
+</div>
