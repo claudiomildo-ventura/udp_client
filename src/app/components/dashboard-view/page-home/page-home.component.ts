@@ -45,7 +45,6 @@ export class PageHomeComponent implements OnInit {
     });
 
     ngOnInit(): void {
-        this.errorsInitialize();
         void this.detailInitialize();
     }
 
@@ -83,14 +82,6 @@ export class PageHomeComponent implements OnInit {
         const reader = new FileReader();
         reader.onload = (): void => this.frm.patchValue({detail: reader.result as string});
         reader.readAsText(file);
-    }
-
-    private errorsInitialize(): void {
-        this.errorList = [
-            'The detail content must be at least 2 characters long.',
-            'The detail content is empty for generating the structure.',
-            'The detail content is invalid for generating the structure.'
-        ];
     }
 
     private navigateToPageStructure(content: string): void {

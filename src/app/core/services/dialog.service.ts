@@ -32,4 +32,27 @@ export class DialogService {
 
         return ref.afterClosed().toPromise();
     }
+
+    public alert<TComponent, TResult = boolean>(
+        message: string,
+        config: MatDialogConfig = {}
+    ): Promise<TResult | null> {
+
+        const ref = this.dialog.open(MessageDialogComponent, {
+            ...config,
+            data: {
+                title: this.sessionService.getItem(SESSION_SERVICE.application_title),
+                message: `[Message error: ${message}]`,
+            },
+            autoFocus: true,
+            restoreFocus: true,
+            width: config.width ?? '800px',
+            height: config.height ?? 'auto',
+            maxWidth: config.maxWidth ?? '95vw',
+            minWidth: config.minWidth ?? '320px',
+            maxHeight: config.maxHeight ?? '85vh',
+        });
+
+        return ref.afterClosed().toPromise();
+    }
 }

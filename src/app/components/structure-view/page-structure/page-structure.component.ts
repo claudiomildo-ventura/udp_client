@@ -52,13 +52,14 @@ export class PageStructureComponent implements OnInit, AfterViewInit {
 
     ngAfterViewInit(): void {
         this.progressBarInitialize();
+        void this.clearData();
     }
 
     public submit(): void {
         if (this.frm.invalid || this.selectionModel.selected.length === 0) return;
 
         const tablesWithFields: Table[] = this.getAllTablesWithFieldsFromStructureForm()
-        //this.save(tablesWithFields);
+        void this.saveData(tablesWithFields);
         this.navigateToPageParameter();
     }
 
@@ -135,8 +136,7 @@ export class PageStructureComponent implements OnInit, AfterViewInit {
         return this.dtsTables.data
             .map((table: Table) => ({
                 ...table,
-                fields: table.fields.filter((field: Field): boolean =>
-                    this.selectionModel.isSelected(field))
+                fields: table.fields.filter((field: Field): boolean => this.selectionModel.isSelected(field))
             }))
             .filter(table => table.fields.length > 0);
     }
@@ -149,12 +149,21 @@ export class PageStructureComponent implements OnInit, AfterViewInit {
         const response: TableResponse = await this.archetypeService.postMapping<TableResponse>(`${ENVIRONMENT.basePath}${ENVIRONMENT.endpoints.structure}`,
             {data: this.detailContent}
         );
+
         this.formShow(response);
     }
 
-    private async save(columns: any): Promise<void> {
+    private async saveData(columns: any): Promise<void> {
         try {
-            await this.indexedDbService.addColumns(columns);
+            await this.indexedDbService.saveData(columns);
+        } catch (err) {
+            console.error(err);
+        }
+    }
+
+    private async clearData(): Promise<void> {
+        try {
+            await this.indexedDbService.clearData();
         } catch (err) {
             console.error(err);
         }

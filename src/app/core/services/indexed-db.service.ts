@@ -32,7 +32,7 @@ export class IndexedDbService {
         this.dbPromise = this.openDatabase();
     }
 
-    public async addColumns(columns: any[]): Promise<void> {
+    public async saveData(columns: any[]): Promise<void> {
         const database: IDBDatabase = await this.dbPromise;
         const transac: IDBTransaction = database.transaction(DATABASE_SERVICE.storeName, 'readwrite');
         const store: IDBObjectStore = transac.objectStore(DATABASE_SERVICE.storeName);
@@ -56,6 +56,29 @@ export class IndexedDbService {
         return new Promise((resolve, reject): void => {
             request.onsuccess = (): void => resolve(request.result);
             request.onerror = (): void => reject(request.error);
+        });
+    }
+
+    public async clearData(): Promise<void> {
+        const database: IDBDatabase = await this.dbPromise;
+
+        // 1. Start a transaction in 'readwrite' mode
+        const transac: IDBTransaction = database.transaction(DATABASE_SERVICE.storeName, 'readwrite');
+        const store: IDBObjectStore = transac.objectStore(DATABASE_SERVICE.storeName);
+
+        // 2. Request to clear the entire object store
+        const request: IDBRequest = store.clear();
+
+        // 3. Return a promise that resolves when the transaction completes
+        return new Promise((resolve, reject): void => {
+            request.onsuccess = (): void => {
+                // The 'clear' request succeeded, now wait for the transaction to complete
+            };
+            request.onerror = (): void => reject(request.error);
+
+            // The transaction completion indicates all operations are finished
+            transac.oncomplete = (): void => resolve();
+            transac.onerror = (): void => reject(transac.error);
         });
     }
 }
