@@ -1,48 +1,52 @@
-
 <div class="container mt-3">
-    <form [formGroup]="frmParameterPage" (ngSubmit)="submit()">
+    <form [formGroup]="this.form">
         <mat-card>
             <mat-card-content class="mat-elevation-z0">
                 <div class="d-flex flex-row justify-content-center align-items-center" style="gap: 16px;">
 
-                    <mat-form-field>
-                        <mat-label>Architectures</mat-label>
-                        <select matNativeControl required>
-                            <option value="volvo">Volvo</option>
-                            <option value="saab">Saab</option>
-                        </select>
+                    <mat-form-field appearance="fill">
+                        <mat-label>{{ this.architectureTitle }}</mat-label>
+                        <mat-select formControlName="architecture">
+                            <mat-option *ngFor="let item of this.architectureList" [value]="item.id">
+                                {{ item.data }}
+                            </mat-option>
+                        </mat-select>
                     </mat-form-field>
 
-                    <mat-form-field>
-                        <mat-label>Databases</mat-label>
-                        <select matNativeControl required>
-                            <option value="volvo">Volvo</option>
-                            <option value="saab">Saab</option>
-                        </select>
+                    <mat-form-field appearance="fill">
+                        <mat-label>{{ this.databaseTitle }}</mat-label>
+                        <mat-select formControlName="database">
+                            <mat-option *ngFor="let item of this.databaseList" [value]="item.id">
+                                {{ item.data }}
+                            </mat-option>
+                        </mat-select>
                     </mat-form-field>
 
-                    <mat-form-field>
-                        <mat-label>Databases engineer</mat-label>
-                        <select matNativeControl required>
-                            <option value="volvo">Volvo</option>
-                            <option value="saab">Saab</option>
-                        </select>
+                    <mat-form-field appearance="fill">
+                        <mat-label>{{ this.databaseEngineerTitle }}</mat-label>
+                        <mat-select formControlName="databaseEngineer">
+                            <mat-option *ngFor="let item of this.databaseEngineerList" [value]="item.id">
+                                {{ item.data }}
+                            </mat-option>
+                        </mat-select>
                     </mat-form-field>
 
-                    <mat-form-field>
-                        <mat-label>Environments</mat-label>
-                        <select matNativeControl required>
-                            <option value="volvo">Volvo</option>
-                            <option value="saab">Saab</option>
-                        </select>
+                    <mat-form-field appearance="fill">
+                        <mat-label>{{ this.environmentTitle }}</mat-label>
+                        <mat-select formControlName="template">
+                            <mat-option *ngFor="let item of this.templateList" [value]="item.id">
+                                {{ item.data }}
+                            </mat-option>
+                        </mat-select>
                     </mat-form-field>
 
-                    <mat-form-field>
-                        <mat-label>Scaffolds</mat-label>
-                        <select matNativeControl required>
-                            <option value="volvo">Volvo</option>
-                            <option value="saab">Saab</option>
-                        </select>
+                    <mat-form-field appearance="fill">
+                        <mat-label>{{ this.scaffoldTitle }}</mat-label>
+                        <mat-select formControlName="scaffold">
+                            <mat-option *ngFor="let item of this.scaffoldList" [value]="item.id">
+                                {{ item.data }}
+                            </mat-option>
+                        </mat-select>
                     </mat-form-field>
 
                 </div>

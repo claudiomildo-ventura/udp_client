@@ -6,11 +6,11 @@ export const ENVIRONMENT = {
         footer: 'footer',
         enterprise: 'enterprise',
         timezone: 'timezone',
-        architecture: 'architectures',
+        architectures: 'architectures',
         databases: 'databases',
         databases_engineer: 'databases-engineer',
         environments: 'environments',
-        forms: 'templates',
+        templates: 'templates',
         scaffolds: 'scaffolds',
         structure: 'generate-structure'
     },

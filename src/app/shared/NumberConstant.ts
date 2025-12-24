@@ -1,4 +1,5 @@
 export const NUMBER_CONSTANT = {
+        INITIALIZE_WITH_0: 0,
         INITIALIZE_WITH_1: 1,
         INITIALIZE_WITH_2: 2,
         INITIALIZE_WITH_3: 3,
