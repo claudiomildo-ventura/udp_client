@@ -1,10 +1,10 @@
-import {inject, Injectable} from '@angular/core';
-import {HttpclientService} from "./httpclient.service";
-import {catchError, timeout} from "rxjs/operators";
-import {firstValueFrom, throwError} from "rxjs";
-import {ApiResponse} from "../../shared/interface/ApiResponse";
 import {HttpContext} from "@angular/common/http";
+import {inject, Injectable} from '@angular/core';
+import {firstValueFrom, throwError} from "rxjs";
+import {catchError, timeout} from "rxjs/operators";
+import {ApiResponse} from "../../shared/interface/ApiResponse";
 import {DialogService} from "./dialog.service";
+import {HttpclientService} from "./httpclient.service";
 
 @Injectable({providedIn: 'root'})
 export class ArchetypeService {

@@ -12,7 +12,8 @@ export const ENVIRONMENT = {
         environments: 'environments',
         templates: 'templates',
         scaffolds: 'scaffolds',
-        structure: 'generate-structure'
+        generateStructure: 'generate-structure',
+        generateSolution: 'generate-solution'
     },
     production: false,
     development: true,

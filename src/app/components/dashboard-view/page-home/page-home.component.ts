@@ -1,15 +1,15 @@
+import {CommonModule} from "@angular/common";
 import {Component, inject, OnInit} from '@angular/core';
 import {AbstractControl, FormBuilder, FormGroup, ReactiveFormsModule, Validators} from '@angular/forms';
-import {Validator} from 'src/app/shared/validator/validator';
-import {ApiResponse} from "../../../shared/interface/ApiResponse";
-import {ArchetypeService} from "../../../core/services/archetype.service";
-import {ENVIRONMENT} from 'src/environments/environment';
-import {StringFunc} from 'src/app/shared/string-utils/StringFunc';
-import {NUMBER_CONSTANT} from "../../../shared/NumberConstant";
 import {Router} from "@angular/router";
-import {TECHNICAL_LOGGER} from "../../../../config/technical-logger";
-import {CommonModule} from "@angular/common";
-import {MaterialModule} from "../../../material.module";
+import {ArchetypeService} from "src/app/core/services/archetype.service";
+import {MaterialModule} from "src/app/material.module";
+import {ApiResponse} from "src/app/shared/interface/ApiResponse";
+import {NUMBER_CONSTANT} from "src/app/shared/NumberConstant";
+import {StringFunc} from 'src/app/shared/string-utils/StringFunc';
+import {Validator} from 'src/app/shared/validator/validator';
+import {TECHNICAL_LOGGER} from "src/config/technical-logger";
+import {ENVIRONMENT} from 'src/environments/environment';
 
 @Component({
     selector: 'page-home',

@@ -1,5 +1,7 @@
 import {Component, ElementRef, inject, OnInit, ViewChild} from '@angular/core';
 import {CommonModule} from "@angular/common";
+import {ArchetypeGenerate} from "src/app/shared/interface/archetype-generate";
+import {TableResponse} from "src/app/shared/interface/TablesResponse";
 import {MaterialModule} from "../../material.module";
 import {IndexedDbService} from "../../core/services/indexed-db.service";
 import {FormBuilder, FormGroup, ReactiveFormsModule} from "@angular/forms";
@@ -70,18 +72,69 @@ export class ParameterViewComponent implements OnInit {
         void this.loadDataFromIndexedDb();
     }
 
-    public submit(): void {
+    public async submit(): Promise<void> {
         if (this.frm.invalid) {
             this.dialogService.alert('Form inválido!');
             return;
         }
 
-        console.log('Selecionado:', this.frm.value.architecture);
-        console.log('Selecionado:', this.frm.value.database);
-        console.log('Selecionado:', this.frm.value.databaseEngineer);
-        console.log('Selecionado:', this.frm.value.environment);
-        console.log('Selecionado:', this.frm.value.template);
-        console.log('Selecionado:', this.frm.value.scaffold);
+        const tablesData: any[] = await this.indexedDbService.getColumns();
+
+        const tables: Table[] = [];
+
+        for (const element of tablesData) {
+            const t = element;
+
+            const table: Table = {
+                id: t.id,
+                name: t.name,
+                type: t.type,
+                isAutoCreated: t.isAutoCreated,
+                fields: []
+            };
+
+            for (const element of t.fields) {
+                const column = element;
+
+                const field: Field = {
+                    id: column.id,
+                    tableRelationId: column.tableRelationId,
+                    columnName: column.columnName,
+                    type: column.type,
+                    index: column.index,
+                    length: column.length,
+                    sequence: column.sequence,
+                    isAutoCreated: column.isAutoCreated,
+                    isPrimaryKey: column.isPrimaryKey,
+                    isForeignKey: column.isForeignKey,
+                    isIndex: column.isIndex,
+                    isNotNull: column.isNotNull
+                };
+
+                table.fields.push(field);
+            }
+            tables.push(table);
+        }
+
+        const archetypeGenerate: ArchetypeGenerate = {
+            architecture: this.frm.value.architecture,
+            database: this.frm.value.database,
+            databaseEngineer: this.frm.value.databaseEngineer,
+            environment: this.frm.value.environment,
+            template: this.frm.value.template,
+            scaffold: this.frm.value.scaffold,
+            table: tables
+        };
+
+        try {
+            await this.archetypeService.postMapping<void>(
+                `${ENVIRONMENT.basePath}${ENVIRONMENT.endpoints.generateSolution}`,
+                archetypeGenerate
+            );
+            console.log('Solution generated successfully');
+        } catch (ex) {
+            console.error('Error generating solution:', ex);
+        }
     }
 
     private async architecturesInitialize(): Promise<void> {

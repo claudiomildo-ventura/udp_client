@@ -146,7 +146,7 @@ export class PageStructureComponent implements OnInit, AfterViewInit {
     }
 
     private async dataPost(): Promise<void> {
-        const response: TableResponse = await this.archetypeService.postMapping<TableResponse>(`${ENVIRONMENT.basePath}${ENVIRONMENT.endpoints.structure}`,
+        const response: TableResponse = await this.archetypeService.postMapping<TableResponse>(`${ENVIRONMENT.basePath}${ENVIRONMENT.endpoints.generateStructure}`,
             {data: this.detailContent}
         );
 
