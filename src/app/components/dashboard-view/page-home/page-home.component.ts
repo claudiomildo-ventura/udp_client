@@ -23,7 +23,7 @@ import {MaterialModule} from "../../../material.module";
     styleUrls: ['./page-home.component.css'],
 })
 export class PageHomeComponent implements OnInit {
-    private readonly formBuilder: FormBuilder = inject(FormBuilder);
+    private readonly fb: FormBuilder = inject(FormBuilder);
     private readonly router: Router = inject(Router);
     private readonly archetypeService: ArchetypeService = inject(ArchetypeService);
 
@@ -80,8 +80,8 @@ export class PageHomeComponent implements OnInit {
     }
 
     private formActive(): void {
-        this.frmHomePage = this.formBuilder.group({
-            group1: this.formBuilder.group({
+        this.frmHomePage = this.fb.group({
+            group1: this.fb.group({
                 detail: [
                     StringFunc.STRING_EMPTY,
                     [
@@ -112,7 +112,7 @@ export class PageHomeComponent implements OnInit {
 
     private async detailInitialize(): Promise<void> {
         const url = `${ENVIRONMENT.basePath}${ENVIRONMENT.endpoints.detail}`;
-        this.detail.data = await this.archetypeService.getMapping(url);
+        this.detail.data = await this.archetypeService.getMapping(`${ENVIRONMENT.basePath}${ENVIRONMENT.endpoints.detail}`);
         this.detailControl?.setValue(this.detail.data);
     }
 }

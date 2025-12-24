@@ -15,10 +15,31 @@ export class ArchetypeService {
 
     public async getMapping<T>(url: string): Promise<T> {
         try {
-            const response: ApiResponse<T> = await firstValueFrom(this.httpclientService.getMapping$<ApiResponse<T>>(url)
-                .pipe(timeout(this.timeOut), catchError(ex => throwError((): any => ex))));
+            const response = await firstValueFrom(
+                this.httpclientService
+                    .getMapping$<ApiResponse<T>>(url)
+                    .pipe(
+                        timeout(this.timeOut),
+                        catchError(ex => throwError((): any => ex))
+                    )
+            );
             return response.data;
 
+        } catch (ex) {
+            throw ex;
+        }
+    }
+
+    public async getMappingList<T>(url: string): Promise<T> {
+        try {
+            return await firstValueFrom(
+                this.httpclientService
+                    .getMapping$<T>(url)
+                    .pipe(
+                        timeout(this.timeOut),
+                        catchError(ex => throwError((): any => ex))
+                    )
+            );
         } catch (ex) {
             throw ex;
         }
