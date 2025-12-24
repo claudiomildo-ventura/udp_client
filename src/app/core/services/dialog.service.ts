@@ -1,8 +1,8 @@
 import {inject, Injectable} from '@angular/core';
-import {SESSION_SERVICE} from "../../../config/session-service";
-import {SessionService} from "./session-storage.service";
 import {MatDialog, MatDialogConfig} from "@angular/material/dialog";
+import {SESSION_SERVICE} from "../../../config/session-service";
 import {MessageDialogComponent} from "../../components/message-dialog/message-dialog.component";
+import {SessionService} from "./session-storage.service";
 
 @Injectable({providedIn: 'root'})
 export class DialogService {
