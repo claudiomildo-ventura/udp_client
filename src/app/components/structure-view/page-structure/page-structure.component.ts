@@ -126,6 +126,8 @@ export class PageStructureComponent implements OnInit, AfterViewInit {
     }
 
     private progressBarInitialize(): void {
+
+        //this.progressBarComponent.progressBarInitialize(this.dataPost);
         setTimeout((): void => {
             void this.dataPost();
             this.isPageLoading = false;

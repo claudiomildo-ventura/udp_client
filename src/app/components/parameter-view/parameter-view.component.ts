@@ -1,19 +1,20 @@
-import {AfterViewInit, Component, ElementRef, inject, OnInit, ViewChild} from '@angular/core';
 import {CommonModule} from "@angular/common";
-import {ArchetypeGenerate} from "src/app/shared/interface/archetype-generate";
-import {TableResponse} from "src/app/shared/interface/TablesResponse";
-import {MaterialModule} from "../../material.module";
-import {IndexedDbService} from "../../core/services/indexed-db.service";
+import {AfterViewInit, Component, ElementRef, inject, OnInit, signal, ViewChild, WritableSignal} from '@angular/core';
 import {FormBuilder, FormGroup, ReactiveFormsModule} from "@angular/forms";
-import {ENVIRONMENT} from "../../../environments/environment";
-import {ParameterListResponse} from "../../shared/interface/parameter-list-response";
+import {Router} from "@angular/router";
+import {ArchetypeGenerate} from "src/app/shared/interface/archetype-generate";
+import {TECHNICAL_LOGGER} from "src/config/technical-logger";
+import {ENVIRONMENT} from "src/environments/environment";
 import {ArchetypeService} from "../../core/services/archetype.service";
-import {NUMBER_CONSTANT} from "../../shared/NumberConstant";
-import {PARAMETERS_LABEL} from "../../shared/constant/form-label";
-import {StringFunc} from "../../shared/string-utils/StringFunc";
-import {Table} from "../../shared/interface/Table";
-import {Field} from "../../shared/interface/Field";
 import {DialogService} from "../../core/services/dialog.service";
+import {IndexedDbService} from "../../core/services/indexed-db.service";
+import {MaterialModule} from "../../material.module";
+import {PARAMETERS_LABEL} from "../../shared/constant/form-label";
+import {Field} from "../../shared/interface/Field";
+import {ParameterListResponse} from "../../shared/interface/parameter-list-response";
+import {Table} from "../../shared/interface/Table";
+import {NUMBER_CONSTANT} from "../../shared/NumberConstant";
+import {StringFunc} from "../../shared/string-utils/StringFunc";
 
 @Component({
     selector: 'parameter-view',
@@ -27,12 +28,12 @@ import {DialogService} from "../../core/services/dialog.service";
     styleUrl: './parameter-view.component.css'
 })
 export class ParameterViewComponent implements OnInit, AfterViewInit {
-    public architectureTitle: string = StringFunc.STRING_EMPTY;
-    public dtbPlatformTitle: string = StringFunc.STRING_EMPTY;
-    public dtbEngineerTitle: string = StringFunc.STRING_EMPTY;
-    public engPlatformTitle: string = StringFunc.STRING_EMPTY;
-    public templateTitle: string = StringFunc.STRING_EMPTY;
-    public scaffoldTitle: string = StringFunc.STRING_EMPTY;
+    public architectureTitle: WritableSignal<string> = signal(StringFunc.STRING_EMPTY);
+    public dtbPlatformTitle: WritableSignal<string> = signal(StringFunc.STRING_EMPTY);
+    public dtbEngineerTitle: WritableSignal<string> = signal(StringFunc.STRING_EMPTY);
+    public engPlatformTitle: WritableSignal<string> = signal(StringFunc.STRING_EMPTY);
+    public templateTitle: WritableSignal<string> = signal(StringFunc.STRING_EMPTY);
+    public scaffoldTitle: WritableSignal<string> = signal(StringFunc.STRING_EMPTY);
 
     public architectureList: ParameterListResponse[] = [];
     public dtbPlatformList: ParameterListResponse[] = [];
@@ -49,6 +50,7 @@ export class ParameterViewComponent implements OnInit, AfterViewInit {
     @ViewChild('lblScaffold') lblScaffold!: ElementRef<HTMLElement>;
 
     public isPageLoading: boolean = true;
+    private readonly router: Router = inject(Router);
     private readonly fb: FormBuilder = inject(FormBuilder);
     private readonly dialogService: DialogService = inject(DialogService);
     private readonly indexedDbService: IndexedDbService = inject(IndexedDbService);
@@ -84,17 +86,19 @@ export class ParameterViewComponent implements OnInit, AfterViewInit {
 
         this.isPageLoading = true;
 
-        setTimeout((): void => {
-            this.dataPost();
+        setTimeout(async (): Promise<void> => {
+            await this.dataPost();
+            await this.navigateToPageHome();
             this.isPageLoading = false;
-        }, 1000);
+        }, 2000);
+    }
 
-
+    private async navigateToPageHome(): Promise<void> {
+        await this.router.navigate(['/page-home'], {}).then(success => TECHNICAL_LOGGER.info(`Navigation result: ${success}`));
     }
 
     private progressBarInitialize(): void {
         setTimeout((): void => {
-
             this.isPageLoading = false;
         }, 1000);
     }
@@ -147,50 +151,50 @@ export class ParameterViewComponent implements OnInit, AfterViewInit {
             scaffold: this.frm.value.scaffold,
             tables: tables
         };
-        console.log('>>>>' + JSON.stringify(archetypeGenerate));
+
         try {
             await this.archetypeService.postMapping<void>(
                 `${ENVIRONMENT.basePath}${ENVIRONMENT.endpoints.generateSolution}`,
                 archetypeGenerate
             );
-            console.log('Solution generated successfully');
+            void this.dialogService.info('Solution generated successfully.');
         } catch (ex) {
-            console.error('Error generating solution:', ex);
+            void this.dialogService.alert('Error generating solution:' + ex);
         }
     }
 
     private async architecturesInitialize(): Promise<void> {
-        this.architectureTitle = PARAMETERS_LABEL.ARCHITECTURE;
+        this.architectureTitle.set(PARAMETERS_LABEL.ARCHITECTURE);
         this.architectureList = await this.archetypeService.getMappingList<ParameterListResponse[]>(`${ENVIRONMENT.basePath}${ENVIRONMENT.endpoints.architectures}`);
         this.frm.patchValue({architecture: NUMBER_CONSTANT.INITIALIZE_WITH_0});
     }
 
     private async dtbPlatformInitialize(): Promise<void> {
-        this.dtbPlatformTitle = PARAMETERS_LABEL.DTB_PLATFORM;
+        this.dtbPlatformTitle.set(PARAMETERS_LABEL.DTB_PLATFORM);
         this.dtbPlatformList = await this.archetypeService.getMappingList<ParameterListResponse[]>(`${ENVIRONMENT.basePath}${ENVIRONMENT.endpoints.dtb_platform}`);
         this.frm.patchValue({dtbPlatform: NUMBER_CONSTANT.INITIALIZE_WITH_0});
     }
 
     private async dtbEngineerInitialize(): Promise<void> {
-        this.dtbEngineerTitle = PARAMETERS_LABEL.DTB_ENGINEER;
+        this.dtbEngineerTitle.set(PARAMETERS_LABEL.DTB_ENGINEER);
         this.dtbEngineerList = await this.archetypeService.getMappingList<ParameterListResponse[]>(`${ENVIRONMENT.basePath}${ENVIRONMENT.endpoints.dtb_engineer}`);
         this.frm.patchValue({dtbEngineer: NUMBER_CONSTANT.INITIALIZE_WITH_0});
     }
 
     private async engPlatformInitialize(): Promise<void> {
-        this.engPlatformTitle = PARAMETERS_LABEL.ENG_PLATFORM;
+        this.engPlatformTitle.set(PARAMETERS_LABEL.ENG_PLATFORM);
         this.engPlatformList = await this.archetypeService.getMappingList<ParameterListResponse[]>(`${ENVIRONMENT.basePath}${ENVIRONMENT.endpoints.eng_platform}`);
         this.frm.patchValue({engPlatform: NUMBER_CONSTANT.INITIALIZE_WITH_0});
     }
 
     private async templatesInitialize(): Promise<void> {
-        this.templateTitle = PARAMETERS_LABEL.TEMPLATE;
+        this.templateTitle.set(PARAMETERS_LABEL.TEMPLATE);
         this.templateList = await this.archetypeService.getMappingList<ParameterListResponse[]>(`${ENVIRONMENT.basePath}${ENVIRONMENT.endpoints.templates}`);
         this.frm.patchValue({template: NUMBER_CONSTANT.INITIALIZE_WITH_0});
     }
 
     private async scaffoldsInitialize(): Promise<void> {
-        this.scaffoldTitle = PARAMETERS_LABEL.SCAFFOLD;
+        this.scaffoldTitle.set(PARAMETERS_LABEL.SCAFFOLD);
         this.scaffoldList = await this.archetypeService.getMappingList<ParameterListResponse[]>(`${ENVIRONMENT.basePath}${ENVIRONMENT.endpoints.scaffolds}`);
         this.frm.patchValue({scaffold: NUMBER_CONSTANT.INITIALIZE_WITH_0});
     }
