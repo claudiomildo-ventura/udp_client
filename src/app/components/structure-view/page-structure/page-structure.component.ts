@@ -1,19 +1,19 @@
-import {AfterViewInit, Component, inject, OnInit, ViewChild} from '@angular/core';
-import {ArchetypeService} from "../../../core/services/archetype.service";
-import {ApiResponse} from "../../../shared/interface/ApiResponse";
-import {ENVIRONMENT} from "../../../../environments/environment";
-import {TableResponse} from "../../../shared/interface/TablesResponse";
-import {CommonModule} from "@angular/common";
-import {MatTableDataSource} from "@angular/material/table";
-import {MatSort} from "@angular/material/sort";
 import {SelectionModel} from "@angular/cdk/collections";
-import {Table} from "../../../shared/interface/Table";
-import {Field} from "../../../shared/interface/Field";
+import {CommonModule} from "@angular/common";
+import {AfterViewInit, Component, inject, OnInit, ViewChild} from '@angular/core';
 import {FormBuilder, FormGroup, ReactiveFormsModule} from "@angular/forms";
-import {MaterialModule} from "../../../material.module";
-import {IndexedDbService} from "../../../core/services/indexed-db.service";
-import {TECHNICAL_LOGGER} from "../../../../config/technical-logger";
+import {MatSort} from "@angular/material/sort";
+import {MatTableDataSource} from "@angular/material/table";
 import {Router} from "@angular/router";
+import {TECHNICAL_LOGGER} from "../../../../config/technical-logger";
+import {ENVIRONMENT} from "../../../../environments/environment";
+import {ArchetypeService} from "../../../core/services/archetype.service";
+import {IndexedDbService} from "../../../core/services/indexed-db.service";
+import {MaterialModule} from "../../../material.module";
+import {ApiResponse} from "../../../shared/interface/ApiResponse";
+import {Field} from "../../../shared/interface/Field";
+import {Table} from "../../../shared/interface/Table";
+import {TableResponse} from "../../../shared/interface/TablesResponse";
 import {StringFunc} from "../../../shared/string-utils/StringFunc";
 
 @Component({

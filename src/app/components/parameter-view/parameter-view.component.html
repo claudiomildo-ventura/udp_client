@@ -11,23 +11,23 @@
                 </mat-form-field>
 
                 <mat-form-field appearance="outline">
-                    <mat-label #lblDatabase>{{ this.databaseTitle }}</mat-label>
-                    <mat-select formControlName="database">
-                        <mat-option *ngFor="let item of this.databaseList" [value]="item.id">{{ item.data }}</mat-option>
+                    <mat-label #lblDbPlatform>{{ this.dtbPlatformTitle }}</mat-label>
+                    <mat-select formControlName="dtbPlatform">
+                        <mat-option *ngFor="let item of this.dtbPlatformList" [value]="item.id">{{ item.data }}</mat-option>
                     </mat-select>
                 </mat-form-field>
 
                 <mat-form-field appearance="outline">
-                    <mat-label #lblDatabaseEngineer>{{ this.databaseEngineerTitle }}</mat-label>
-                    <mat-select formControlName="databaseEngineer">
-                        <mat-option *ngFor="let item of this.databaseEngineerList" [value]="item.id">{{ item.data }}</mat-option>
+                    <mat-label #lblDbEngineer>{{ this.dtbEngineerTitle }}</mat-label>
+                    <mat-select formControlName="dtbEngineer">
+                        <mat-option *ngFor="let item of this.dtbEngineerList" [value]="item.id">{{ item.data }}</mat-option>
                     </mat-select>
                 </mat-form-field>
 
                 <mat-form-field appearance="outline">
-                    <mat-label #lblEnvironment>{{ this.environmentTitle }}</mat-label>
-                    <mat-select formControlName="environment">
-                        <mat-option *ngFor="let item of this.environmentList" [value]="item.id">{{ item.data }}</mat-option>
+                    <mat-label #lblEnvironment>{{ this.engPlatformTitle }}</mat-label>
+                    <mat-select formControlName="engPlatform">
+                        <mat-option *ngFor="let item of this.engPlatformList" [value]="item.id">{{ item.data }}</mat-option>
                     </mat-select>
                 </mat-form-field>
 
@@ -55,3 +55,7 @@
         </button>
     </div>
 </form>
+
+<div *ngIf="isPageLoading" class="loading-overlay">
+    <mat-spinner color="primary"></mat-spinner>
+</div>
