@@ -15,7 +15,7 @@ import {ENVIRONMENT} from "src/environments/environment";
     styleUrl: './page-enterprise.component.css'
 })
 export class PageEnterpriseComponent implements OnInit {
-    private readonly _enterprise: WritableSignal<ApiResponse<string>> = signal({data: StringFunc.STRING_EMPTY});
+    private readonly _enterprise: WritableSignal<ApiResponse<string>> = signal({payload: StringFunc.STRING_EMPTY});
     public enterprise: Signal<ApiResponse<string>> = this._enterprise.asReadonly();
 
     private readonly archetypeService: ArchetypeService = inject(ArchetypeService);
@@ -27,6 +27,6 @@ export class PageEnterpriseComponent implements OnInit {
     }
 
     private async setEnterprise(): Promise<void> {
-        this._enterprise.set({data: await this.archetypeService.getMapping(`${ENVIRONMENT.basePath}${ENVIRONMENT.endpoints.enterprise}`)});
+        this._enterprise.set({payload: await this.archetypeService.getMapping(`${ENVIRONMENT.basePath}${ENVIRONMENT.endpoints.enterprise}`)});
     }
 }

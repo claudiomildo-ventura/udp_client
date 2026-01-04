@@ -19,7 +19,7 @@ import {ENVIRONMENT} from 'src/environments/environment';
     styleUrls: ['./page-title.component.css']
 })
 export class PageTitleComponent implements OnInit {
-    private readonly _title: WritableSignal<ApiResponse<string>> = signal({data: StringFunc.STRING_EMPTY});
+    private readonly _title: WritableSignal<ApiResponse<string>> = signal({payload: StringFunc.STRING_EMPTY});
     public title: Signal<ApiResponse<string>> = this._title.asReadonly();
 
     private readonly sessionService: SessionService = inject(SessionService);
@@ -33,7 +33,8 @@ export class PageTitleComponent implements OnInit {
     }
 
     private async setTitle(): Promise<void> {
-        this._title.set({data: await this.archetypeService.getMapping(`${ENVIRONMENT.basePath}${ENVIRONMENT.endpoints.title}`)});
+        this._title.set({payload: await this.archetypeService.getMapping(`${ENVIRONMENT.basePath}${ENVIRONMENT.endpoints.title}`)});
+        console.log(this.title().payload);
     }
 
     /**
@@ -42,6 +43,6 @@ export class PageTitleComponent implements OnInit {
      */
     private sessionStorageInitialize(): void {
         this.sessionService.clear();
-        this.sessionService.setItem(SESSION_SERVICE.application_title, this._title().data);
+        this.sessionService.setItem(SESSION_SERVICE.application_title, this._title().payload);
     }
 }

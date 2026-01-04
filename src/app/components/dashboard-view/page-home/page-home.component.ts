@@ -25,7 +25,7 @@ import {ENVIRONMENT} from 'src/environments/environment';
 export class PageHomeComponent implements OnInit {
     public startValidation: boolean = false;
     public selectedFileName: string = StringFunc.STRING_EMPTY;
-    public detail: ApiResponse<any> = {data: StringFunc.STRING_EMPTY};
+    public detail: ApiResponse<any> = {payload: StringFunc.STRING_EMPTY};
     public errorList: string[] = [];
 
     private readonly router: Router = inject(Router);
@@ -91,7 +91,7 @@ export class PageHomeComponent implements OnInit {
     }
 
     private async detailInitialize(): Promise<void> {
-        this.detail.data = await this.archetypeService.getMapping(`${ENVIRONMENT.basePath}${ENVIRONMENT.endpoints.detail}`);
-        this.frm.patchValue({detail: this.detail.data});
+        this.detail.payload = await this.archetypeService.getMapping(`${ENVIRONMENT.basePath}${ENVIRONMENT.endpoints.detail}`);
+        this.frm.patchValue({detail: this.detail.payload});
     }
 }

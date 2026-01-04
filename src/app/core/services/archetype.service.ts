@@ -22,7 +22,7 @@ export class ArchetypeService {
                         catchError(ex => throwError((): any => ex))
                     )
             );
-            return response.data;
+            return response.payload;
 
         } catch (ex) {
             throw ex;

@@ -8,11 +8,9 @@ import {Router} from "@angular/router";
 import {ArchetypeService} from "src/app/core/services/archetype.service";
 import {IndexedDbService} from "src/app/core/services/indexed-db.service";
 import {MaterialModule} from "src/app/material.module";
-import {ApiResponse} from "src/app/shared/interface/ApiResponse";
 import {Field} from "src/app/shared/interface/Field";
 import {Table} from "src/app/shared/interface/Table";
 import {TableResponse} from "src/app/shared/interface/TablesResponse";
-import {StringFunc} from "src/app/shared/string-utils/StringFunc";
 import {TECHNICAL_LOGGER} from "src/config/technical-logger";
 import {ENVIRONMENT} from "src/environments/environment";
 
@@ -124,7 +122,6 @@ export class PageStructureComponent implements OnInit, AfterViewInit {
     }
 
     private progressBarInitialize(): void {
-
         setTimeout((): void => {
             void this.dataPost();
             this.isPageLoading = false;
@@ -145,7 +142,7 @@ export class PageStructureComponent implements OnInit, AfterViewInit {
     }
 
     private async dataPost(): Promise<void> {
-        const response: TableResponse = await this.archetypeService.postMapping<TableResponse>(`${ENVIRONMENT.basePath}${ENVIRONMENT.endpoints.generateStructure}`,
+        const response: TableResponse = await this.archetypeService.postMapping<TableResponse>(`${ENVIRONMENT.basePath}${ENVIRONMENT.endpoints.generate_structure}`,
             {data: this.detailContent}
         );
 

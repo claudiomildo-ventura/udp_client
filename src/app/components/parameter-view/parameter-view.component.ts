@@ -151,7 +151,7 @@ export class ParameterViewComponent implements OnInit, AfterViewInit {
 
         try {
             await this.archetypeService.postMapping<void>(
-                `${ENVIRONMENT.basePath}${ENVIRONMENT.endpoints.generateSolution}`,
+                `${ENVIRONMENT.basePath}${ENVIRONMENT.endpoints.generate_solution}`,
                 archetypeGenerate
             );
             void this.dialogService.info('Solution generated successfully.');
@@ -189,37 +189,37 @@ export class ParameterViewComponent implements OnInit, AfterViewInit {
 
     private async architecturesInitialize(): Promise<void> {
         this.architectureTitle.set(PARAMETERS_LABEL.ARCHITECTURE);
-        this.architectureList.set(await this.archetypeService.getMappingList<ParameterListResponse[]>(`${ENVIRONMENT.basePath}${ENVIRONMENT.endpoints.architectures}`));
+        this.architectureList.set(await this.archetypeService.getMappingList<ParameterListResponse[]>(`${ENVIRONMENT.basePath}${ENVIRONMENT.endpoints.architecture}`));
         this.frm.patchValue({architecture: NUMBER_CONSTANT.INITIALIZE_WITH_0});
     }
 
     private async dtbPlatformInitialize(): Promise<void> {
         this.dtbPlatformTitle.set(PARAMETERS_LABEL.DTB_PLATFORM);
-        this.dtbPlatformList.set(await this.archetypeService.getMappingList<ParameterListResponse[]>(`${ENVIRONMENT.basePath}${ENVIRONMENT.endpoints.dtb_platform}`));
+        this.dtbPlatformList.set(await this.archetypeService.getMappingList<ParameterListResponse[]>(`${ENVIRONMENT.basePath}${ENVIRONMENT.endpoints.database_platform}`));
         this.frm.patchValue({dtbPlatform: NUMBER_CONSTANT.INITIALIZE_WITH_0});
     }
 
     private async dtbEngineerInitialize(): Promise<void> {
         this.dtbEngineerTitle.set(PARAMETERS_LABEL.DTB_ENGINEER);
-        this.dtbEngineerList.set(await this.archetypeService.getMappingList<ParameterListResponse[]>(`${ENVIRONMENT.basePath}${ENVIRONMENT.endpoints.dtb_engineer}`));
+        this.dtbEngineerList.set(await this.archetypeService.getMappingList<ParameterListResponse[]>(`${ENVIRONMENT.basePath}${ENVIRONMENT.endpoints.database_engineer}`));
         this.frm.patchValue({dtbEngineer: NUMBER_CONSTANT.INITIALIZE_WITH_0});
     }
 
     private async engPlatformInitialize(): Promise<void> {
         this.engPlatformTitle.set(PARAMETERS_LABEL.ENG_PLATFORM);
-        this.engPlatformList.set(await this.archetypeService.getMappingList<ParameterListResponse[]>(`${ENVIRONMENT.basePath}${ENVIRONMENT.endpoints.eng_platform}`));
+        this.engPlatformList.set(await this.archetypeService.getMappingList<ParameterListResponse[]>(`${ENVIRONMENT.basePath}${ENVIRONMENT.endpoints.engineering_platform}`));
         this.frm.patchValue({engPlatform: NUMBER_CONSTANT.INITIALIZE_WITH_0});
     }
 
     private async templatesInitialize(): Promise<void> {
         this.templateTitle.set(PARAMETERS_LABEL.TEMPLATE);
-        this.templateList.set(await this.archetypeService.getMappingList<ParameterListResponse[]>(`${ENVIRONMENT.basePath}${ENVIRONMENT.endpoints.templates}`));
+        this.templateList.set(await this.archetypeService.getMappingList<ParameterListResponse[]>(`${ENVIRONMENT.basePath}${ENVIRONMENT.endpoints.template}`));
         this.frm.patchValue({template: NUMBER_CONSTANT.INITIALIZE_WITH_0});
     }
 
     private async scaffoldsInitialize(): Promise<void> {
         this.scaffoldTitle.set(PARAMETERS_LABEL.SCAFFOLD);
-        this.scaffoldList.set(await this.archetypeService.getMappingList<ParameterListResponse[]>(`${ENVIRONMENT.basePath}${ENVIRONMENT.endpoints.scaffolds}`));
+        this.scaffoldList.set(await this.archetypeService.getMappingList<ParameterListResponse[]>(`${ENVIRONMENT.basePath}${ENVIRONMENT.endpoints.project_template}`));
         this.frm.patchValue({scaffold: NUMBER_CONSTANT.INITIALIZE_WITH_0});
     }
 }

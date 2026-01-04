@@ -17,7 +17,7 @@ import {ENVIRONMENT} from 'src/environments/environment';
     styleUrl: './page-end.component.css'
 })
 export class PageEndComponent implements OnInit {
-    private readonly _footer: WritableSignal<ApiResponse<string>> = signal({data: StringFunc.STRING_EMPTY});
+    private readonly _footer: WritableSignal<ApiResponse<string>> = signal({payload: StringFunc.STRING_EMPTY});
     public footer: Signal<ApiResponse<string>> = this._footer.asReadonly();
 
     private readonly archetypeService: ArchetypeService = inject(ArchetypeService);
@@ -29,6 +29,6 @@ export class PageEndComponent implements OnInit {
     }
 
     private async setFooter(): Promise<void> {
-        this._footer.set({data: await this.archetypeService.getMapping(`${ENVIRONMENT.basePath}${ENVIRONMENT.endpoints.footer}`)});
+        this._footer.set({payload: await this.archetypeService.getMapping(`${ENVIRONMENT.basePath}${ENVIRONMENT.endpoints.footer}`)});
     }
 }
