@@ -2,10 +2,10 @@ import {Table} from "src/app/shared/interface/Table";
 
 export interface ArchetypeGenerate {
     architecture: number
-    dbPlatform: number
-    dbEngineer: number
-    engPlatform: number
+    databasePlatform: number
+    databaseEngineer: number
+    engineeringPlatform: number
     template: number
-    scaffold: number
+    projectTemplate: number
     tables: Table[]
 }
