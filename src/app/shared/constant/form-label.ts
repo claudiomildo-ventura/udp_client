@@ -1,8 +1,8 @@
 export const PARAMETERS_LABEL = {
     ARCHITECTURE: 'Architectures',
-    DTB_PLATFORM: 'Databases Platform',
-    DTB_ENGINEER: 'Databases Engineer',
-    ENG_PLATFORM: 'Engineering Platform',
+    DATABASE_PLATFORM: 'Databases Platform',
+    DATABASE_ENGINEER: 'Databases Engineer',
+    ENGINEERING_PLATFORM: 'Engineering Platforms',
     TEMPLATE: 'Templates',
-    SCAFFOLD: 'Scaffolds'
+    PROJECT_TEMPLATE: 'Project Templates'
 };

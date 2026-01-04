@@ -5,43 +5,43 @@
 
                 <mat-form-field appearance="outline">
                     <mat-label #lblArchitecture>{{ this.architectureTitle() }}</mat-label>
-                    <mat-select formControlName="architecture">
-                        <mat-option *ngFor="let item of this.architectureList()" [value]="item.id">{{ item.data }}</mat-option>
+                    <mat-select formControlName="architectures">
+                        <mat-option *ngFor="let item of this.architectures()" [value]="item.id">{{ item.data }}</mat-option>
                     </mat-select>
                 </mat-form-field>
 
                 <mat-form-field appearance="outline">
-                    <mat-label #lblDatabasePlatform>{{ this.dtbPlatformTitle() }}</mat-label>
-                    <mat-select formControlName="databasePlatform">
-                        <mat-option *ngFor="let item of this.dtbPlatformList()" [value]="item.id">{{ item.data }}</mat-option>
+                    <mat-label #lblDatabasePlatform>{{ this.databasePlatformTitle() }}</mat-label>
+                    <mat-select formControlName="databasePlatforms">
+                        <mat-option *ngFor="let item of this.databasePlatforms()" [value]="item.id">{{ item.data }}</mat-option>
                     </mat-select>
                 </mat-form-field>
 
                 <mat-form-field appearance="outline">
-                    <mat-label #lblDatabaseEngineer>{{ this.dtbEngineerTitle() }}</mat-label>
-                    <mat-select formControlName="databaseEngineer">
-                        <mat-option *ngFor="let item of this.dtbEngineerList()" [value]="item.id">{{ item.data }}</mat-option>
+                    <mat-label #lblDatabaseEngineer>{{ this.databaseEngineerTitle() }}</mat-label>
+                    <mat-select formControlName="databaseEngineers">
+                        <mat-option *ngFor="let item of this.databaseEngineers()" [value]="item.id">{{ item.data }}</mat-option>
                     </mat-select>
                 </mat-form-field>
 
                 <mat-form-field appearance="outline">
-                    <mat-label #lblEngineeringPlatform>{{ this.engPlatformTitle() }}</mat-label>
-                    <mat-select formControlName="engineeringPlatform">
-                        <mat-option *ngFor="let item of this.engPlatformList()" [value]="item.id">{{ item.data }}</mat-option>
+                    <mat-label #lblEngineeringPlatform>{{ this.engineeringPlatformTitle() }}</mat-label>
+                    <mat-select formControlName="engineeringPlatforms">
+                        <mat-option *ngFor="let item of this.engineeringPlatforms()" [value]="item.id">{{ item.data }}</mat-option>
                     </mat-select>
                 </mat-form-field>
 
                 <mat-form-field appearance="outline">
                     <mat-label #lblTemplate>{{ this.templateTitle() }}</mat-label>
-                    <mat-select formControlName="template">
-                        <mat-option *ngFor="let item of this.templateList()" [value]="item.id">{{ item.data }}</mat-option>
+                    <mat-select formControlName="templates">
+                        <mat-option *ngFor="let item of this.templates()" [value]="item.id">{{ item.data }}</mat-option>
                     </mat-select>
                 </mat-form-field>
 
                 <mat-form-field appearance="outline">
-                    <mat-label #lblProjectTemplate>{{ this.scaffoldTitle() }}</mat-label>
-                    <mat-select formControlName="projectTemplate">
-                        <mat-option *ngFor="let item of this.scaffoldList()" [value]="item.id">{{ item.data }}</mat-option>
+                    <mat-label #lblProjectTemplate>{{ this.projectTemplateTitle() }}</mat-label>
+                    <mat-select formControlName="projectTemplates">
+                        <mat-option *ngFor="let item of this.projectTemplates()" [value]="item.id">{{ item.data }}</mat-option>
                     </mat-select>
                 </mat-form-field>
             </div>

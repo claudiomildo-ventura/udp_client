@@ -29,18 +29,18 @@ import {StringFunc} from "../../shared/string-utils/StringFunc";
 })
 export class ParameterViewComponent implements OnInit, AfterViewInit {
     public architectureTitle: WritableSignal<string> = signal(StringFunc.STRING_EMPTY);
-    public dtbPlatformTitle: WritableSignal<string> = signal(StringFunc.STRING_EMPTY);
-    public dtbEngineerTitle: WritableSignal<string> = signal(StringFunc.STRING_EMPTY);
-    public engPlatformTitle: WritableSignal<string> = signal(StringFunc.STRING_EMPTY);
+    public databasePlatformTitle: WritableSignal<string> = signal(StringFunc.STRING_EMPTY);
+    public databaseEngineerTitle: WritableSignal<string> = signal(StringFunc.STRING_EMPTY);
+    public engineeringPlatformTitle: WritableSignal<string> = signal(StringFunc.STRING_EMPTY);
     public templateTitle: WritableSignal<string> = signal(StringFunc.STRING_EMPTY);
-    public scaffoldTitle: WritableSignal<string> = signal(StringFunc.STRING_EMPTY);
+    public projectTemplateTitle: WritableSignal<string> = signal(StringFunc.STRING_EMPTY);
 
-    public architectureList: WritableSignal<ParameterListResponse[]> = signal<ParameterListResponse[]>([]);
-    public dtbPlatformList: WritableSignal<ParameterListResponse[]> = signal<ParameterListResponse[]>([]);
-    public dtbEngineerList: WritableSignal<ParameterListResponse[]> = signal<ParameterListResponse[]>([]);
-    public engPlatformList: WritableSignal<ParameterListResponse[]> = signal<ParameterListResponse[]>([]);
-    public templateList: WritableSignal<ParameterListResponse[]> = signal<ParameterListResponse[]>([]);
-    public scaffoldList: WritableSignal<ParameterListResponse[]> = signal<ParameterListResponse[]>([]);
+    public architectures: WritableSignal<ParameterListResponse[]> = signal<ParameterListResponse[]>([]);
+    public databasePlatforms: WritableSignal<ParameterListResponse[]> = signal<ParameterListResponse[]>([]);
+    public databaseEngineers: WritableSignal<ParameterListResponse[]> = signal<ParameterListResponse[]>([]);
+    public engineeringPlatforms: WritableSignal<ParameterListResponse[]> = signal<ParameterListResponse[]>([]);
+    public templates: WritableSignal<ParameterListResponse[]> = signal<ParameterListResponse[]>([]);
+    public projectTemplates: WritableSignal<ParameterListResponse[]> = signal<ParameterListResponse[]>([]);
 
     public isPageLoading: boolean = true;
     private readonly router: Router = inject(Router);
@@ -57,12 +57,12 @@ export class ParameterViewComponent implements OnInit, AfterViewInit {
     @ViewChild('lblProjectTemplate') lblProjectTemplate!: ElementRef<HTMLElement>;
 
     public frm: FormGroup = this.fb.group({
-        architecture: [0],
-        databasePlatform: [0],
-        databaseEngineer: [0],
-        engineeringPlatform: [0],
-        template: [0],
-        projectTemplate: [0]
+        architectures: [0],
+        databasePlatforms: [0],
+        databaseEngineers: [0],
+        engineeringPlatforms: [0],
+        templates: [0],
+        projectTemplates: [0]
     });
 
     ngOnInit(): void {
@@ -140,12 +140,12 @@ export class ParameterViewComponent implements OnInit, AfterViewInit {
         }
 
         const archetypeGenerate: ArchetypeGenerate = {
-            architecture: this.frm.value.architecture,
-            databasePlatform: this.frm.value.databasePlatform,
-            databaseEngineer: this.frm.value.databaseEngineer,
-            engineeringPlatform: this.frm.value.engineeringPlatform,
-            template: this.frm.value.template,
-            projectTemplate: this.frm.value.projectTemplate,
+            architectures: this.frm.value.architectures,
+            databasePlatforms: this.frm.value.databasePlatforms,
+            databaseEngineers: this.frm.value.databaseEngineers,
+            engineeringPlatforms: this.frm.value.engineeringPlatforms,
+            templates: this.frm.value.templates,
+            projectTemplates: this.frm.value.projectTemplates,
             tables: tables
         };
 
@@ -162,20 +162,20 @@ export class ParameterViewComponent implements OnInit, AfterViewInit {
 
     private allTitleComponentsInitialize(): void {
         this.architectureTitle.set(StringFunc.STRING_EMPTY);
-        this.dtbPlatformTitle.set(StringFunc.STRING_EMPTY);
-        this.dtbEngineerTitle.set(StringFunc.STRING_EMPTY);
-        this.engPlatformTitle.set(StringFunc.STRING_EMPTY);
+        this.databasePlatformTitle.set(StringFunc.STRING_EMPTY);
+        this.databaseEngineerTitle.set(StringFunc.STRING_EMPTY);
+        this.engineeringPlatformTitle.set(StringFunc.STRING_EMPTY);
         this.templateTitle.set(StringFunc.STRING_EMPTY);
-        this.scaffoldTitle.set(StringFunc.STRING_EMPTY);
+        this.projectTemplateTitle.set(StringFunc.STRING_EMPTY);
     }
 
     private allListComponentsInitialize(): void {
-        this.architectureList.set([]);
-        this.dtbPlatformList.set([]);
-        this.dtbEngineerList.set([]);
-        this.engPlatformList.set([]);
-        this.templateList.set([]);
-        this.scaffoldList.set([]);
+        this.architectures.set([]);
+        this.databasePlatforms.set([]);
+        this.databaseEngineers.set([]);
+        this.engineeringPlatforms.set([]);
+        this.templates.set([]);
+        this.projectTemplates.set([]);
     }
 
     private allTemplateComponentsInitialize(): void {
@@ -189,37 +189,37 @@ export class ParameterViewComponent implements OnInit, AfterViewInit {
 
     private async architecturesInitialize(): Promise<void> {
         this.architectureTitle.set(PARAMETERS_LABEL.ARCHITECTURE);
-        this.architectureList.set(await this.archetypeService.getMappingList<ParameterListResponse[]>(`${ENVIRONMENT.basePath}${ENVIRONMENT.endpoints.architecture}`));
+        this.architectures.set(await this.archetypeService.getMappingList<ParameterListResponse[]>(`${ENVIRONMENT.basePath}${ENVIRONMENT.endpoints.architectures}`));
         this.frm.patchValue({architecture: NUMBER_CONSTANT.INITIALIZE_WITH_0});
     }
 
     private async dtbPlatformInitialize(): Promise<void> {
-        this.dtbPlatformTitle.set(PARAMETERS_LABEL.DTB_PLATFORM);
-        this.dtbPlatformList.set(await this.archetypeService.getMappingList<ParameterListResponse[]>(`${ENVIRONMENT.basePath}${ENVIRONMENT.endpoints.database_platform}`));
+        this.databasePlatformTitle.set(PARAMETERS_LABEL.DATABASE_PLATFORM);
+        this.databasePlatforms.set(await this.archetypeService.getMappingList<ParameterListResponse[]>(`${ENVIRONMENT.basePath}${ENVIRONMENT.endpoints.database_platforms}`));
         this.frm.patchValue({databasePlatform: NUMBER_CONSTANT.INITIALIZE_WITH_0});
     }
 
     private async dtbEngineerInitialize(): Promise<void> {
-        this.dtbEngineerTitle.set(PARAMETERS_LABEL.DTB_ENGINEER);
-        this.dtbEngineerList.set(await this.archetypeService.getMappingList<ParameterListResponse[]>(`${ENVIRONMENT.basePath}${ENVIRONMENT.endpoints.database_engineer}`));
+        this.databaseEngineerTitle.set(PARAMETERS_LABEL.DATABASE_ENGINEER);
+        this.databaseEngineers.set(await this.archetypeService.getMappingList<ParameterListResponse[]>(`${ENVIRONMENT.basePath}${ENVIRONMENT.endpoints.database_engineers}`));
         this.frm.patchValue({databaseEngineer: NUMBER_CONSTANT.INITIALIZE_WITH_0});
     }
 
     private async engPlatformInitialize(): Promise<void> {
-        this.engPlatformTitle.set(PARAMETERS_LABEL.ENG_PLATFORM);
-        this.engPlatformList.set(await this.archetypeService.getMappingList<ParameterListResponse[]>(`${ENVIRONMENT.basePath}${ENVIRONMENT.endpoints.engineering_platform}`));
+        this.engineeringPlatformTitle.set(PARAMETERS_LABEL.ENGINEERING_PLATFORM);
+        this.engineeringPlatforms.set(await this.archetypeService.getMappingList<ParameterListResponse[]>(`${ENVIRONMENT.basePath}${ENVIRONMENT.endpoints.engineering_platforms}`));
         this.frm.patchValue({engineeringPlatform: NUMBER_CONSTANT.INITIALIZE_WITH_0});
     }
 
     private async templatesInitialize(): Promise<void> {
         this.templateTitle.set(PARAMETERS_LABEL.TEMPLATE);
-        this.templateList.set(await this.archetypeService.getMappingList<ParameterListResponse[]>(`${ENVIRONMENT.basePath}${ENVIRONMENT.endpoints.template}`));
+        this.templates.set(await this.archetypeService.getMappingList<ParameterListResponse[]>(`${ENVIRONMENT.basePath}${ENVIRONMENT.endpoints.templates}`));
         this.frm.patchValue({template: NUMBER_CONSTANT.INITIALIZE_WITH_0});
     }
 
     private async scaffoldsInitialize(): Promise<void> {
-        this.scaffoldTitle.set(PARAMETERS_LABEL.SCAFFOLD);
-        this.scaffoldList.set(await this.archetypeService.getMappingList<ParameterListResponse[]>(`${ENVIRONMENT.basePath}${ENVIRONMENT.endpoints.project_template}`));
+        this.projectTemplateTitle.set(PARAMETERS_LABEL.PROJECT_TEMPLATE);
+        this.projectTemplates.set(await this.archetypeService.getMappingList<ParameterListResponse[]>(`${ENVIRONMENT.basePath}${ENVIRONMENT.endpoints.project_templates}`));
         this.frm.patchValue({projectTemplate: NUMBER_CONSTANT.INITIALIZE_WITH_0});
     }
 }
