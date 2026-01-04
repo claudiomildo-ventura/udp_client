@@ -50,19 +50,19 @@ export class ParameterViewComponent implements OnInit, AfterViewInit {
     private readonly archetypeService: ArchetypeService = inject(ArchetypeService);
 
     @ViewChild('lblArchitecture') lblArchitecture!: ElementRef<HTMLElement>;
-    @ViewChild('lblDbPlatform') lblDbPlatform!: ElementRef<HTMLElement>;
-    @ViewChild('lblDbEngineer') lblDbEngineer!: ElementRef<HTMLElement>;
-    @ViewChild('lblEnvironment') lblEnvironment!: ElementRef<HTMLElement>;
+    @ViewChild('lblDatabasePlatform') lblDatabasePlatform!: ElementRef<HTMLElement>;
+    @ViewChild('lblDatabaseEngineer') lblDatabaseEngineer!: ElementRef<HTMLElement>;
+    @ViewChild('lblEngineeringPlatform') lblEngineeringPlatform!: ElementRef<HTMLElement>;
     @ViewChild('lblTemplate') lblTemplate!: ElementRef<HTMLElement>;
-    @ViewChild('lblScaffold') lblScaffold!: ElementRef<HTMLElement>;
+    @ViewChild('lblProjectTemplate') lblProjectTemplate!: ElementRef<HTMLElement>;
 
     public frm: FormGroup = this.fb.group({
         architecture: [0],
-        dtbPlatform: [0],
-        dtbEngineer: [0],
-        engPlatform: [0],
+        databasePlatform: [0],
+        databaseEngineer: [0],
+        engineeringPlatform: [0],
         template: [0],
-        scaffold: [0]
+        projectTemplate: [0]
     });
 
     ngOnInit(): void {
@@ -141,11 +141,11 @@ export class ParameterViewComponent implements OnInit, AfterViewInit {
 
         const archetypeGenerate: ArchetypeGenerate = {
             architecture: this.frm.value.architecture,
-            dbPlatform: this.frm.value.dtbPlatform,
-            dbEngineer: this.frm.value.dtbEngineer,
-            engPlatform: this.frm.value.engPlatform,
+            databasePlatform: this.frm.value.databasePlatform,
+            databaseEngineer: this.frm.value.databaseEngineer,
+            engineeringPlatform: this.frm.value.engineeringPlatform,
             template: this.frm.value.template,
-            scaffold: this.frm.value.scaffold,
+            projectTemplate: this.frm.value.projectTemplate,
             tables: tables
         };
 
@@ -196,19 +196,19 @@ export class ParameterViewComponent implements OnInit, AfterViewInit {
     private async dtbPlatformInitialize(): Promise<void> {
         this.dtbPlatformTitle.set(PARAMETERS_LABEL.DTB_PLATFORM);
         this.dtbPlatformList.set(await this.archetypeService.getMappingList<ParameterListResponse[]>(`${ENVIRONMENT.basePath}${ENVIRONMENT.endpoints.database_platform}`));
-        this.frm.patchValue({dtbPlatform: NUMBER_CONSTANT.INITIALIZE_WITH_0});
+        this.frm.patchValue({databasePlatform: NUMBER_CONSTANT.INITIALIZE_WITH_0});
     }
 
     private async dtbEngineerInitialize(): Promise<void> {
         this.dtbEngineerTitle.set(PARAMETERS_LABEL.DTB_ENGINEER);
         this.dtbEngineerList.set(await this.archetypeService.getMappingList<ParameterListResponse[]>(`${ENVIRONMENT.basePath}${ENVIRONMENT.endpoints.database_engineer}`));
-        this.frm.patchValue({dtbEngineer: NUMBER_CONSTANT.INITIALIZE_WITH_0});
+        this.frm.patchValue({databaseEngineer: NUMBER_CONSTANT.INITIALIZE_WITH_0});
     }
 
     private async engPlatformInitialize(): Promise<void> {
         this.engPlatformTitle.set(PARAMETERS_LABEL.ENG_PLATFORM);
         this.engPlatformList.set(await this.archetypeService.getMappingList<ParameterListResponse[]>(`${ENVIRONMENT.basePath}${ENVIRONMENT.endpoints.engineering_platform}`));
-        this.frm.patchValue({engPlatform: NUMBER_CONSTANT.INITIALIZE_WITH_0});
+        this.frm.patchValue({engineeringPlatform: NUMBER_CONSTANT.INITIALIZE_WITH_0});
     }
 
     private async templatesInitialize(): Promise<void> {
@@ -220,6 +220,6 @@ export class ParameterViewComponent implements OnInit, AfterViewInit {
     private async scaffoldsInitialize(): Promise<void> {
         this.scaffoldTitle.set(PARAMETERS_LABEL.SCAFFOLD);
         this.scaffoldList.set(await this.archetypeService.getMappingList<ParameterListResponse[]>(`${ENVIRONMENT.basePath}${ENVIRONMENT.endpoints.project_template}`));
-        this.frm.patchValue({scaffold: NUMBER_CONSTANT.INITIALIZE_WITH_0});
+        this.frm.patchValue({projectTemplate: NUMBER_CONSTANT.INITIALIZE_WITH_0});
     }
 }

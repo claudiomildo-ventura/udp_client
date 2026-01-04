@@ -11,22 +11,22 @@
                 </mat-form-field>
 
                 <mat-form-field appearance="outline">
-                    <mat-label #lblDbPlatform>{{ this.dtbPlatformTitle() }}</mat-label>
-                    <mat-select formControlName="dtbPlatform">
+                    <mat-label #lblDatabasePlatform>{{ this.dtbPlatformTitle() }}</mat-label>
+                    <mat-select formControlName="databasePlatform">
                         <mat-option *ngFor="let item of this.dtbPlatformList()" [value]="item.id">{{ item.data }}</mat-option>
                     </mat-select>
                 </mat-form-field>
 
                 <mat-form-field appearance="outline">
-                    <mat-label #lblDbEngineer>{{ this.dtbEngineerTitle() }}</mat-label>
-                    <mat-select formControlName="dtbEngineer">
+                    <mat-label #lblDatabaseEngineer>{{ this.dtbEngineerTitle() }}</mat-label>
+                    <mat-select formControlName="databaseEngineer">
                         <mat-option *ngFor="let item of this.dtbEngineerList()" [value]="item.id">{{ item.data }}</mat-option>
                     </mat-select>
                 </mat-form-field>
 
                 <mat-form-field appearance="outline">
-                    <mat-label #lblEnvironment>{{ this.engPlatformTitle() }}</mat-label>
-                    <mat-select formControlName="engPlatform">
+                    <mat-label #lblEngineeringPlatform>{{ this.engPlatformTitle() }}</mat-label>
+                    <mat-select formControlName="engineeringPlatform">
                         <mat-option *ngFor="let item of this.engPlatformList()" [value]="item.id">{{ item.data }}</mat-option>
                     </mat-select>
                 </mat-form-field>
@@ -39,8 +39,8 @@
                 </mat-form-field>
 
                 <mat-form-field appearance="outline">
-                    <mat-label #lblScaffold>{{ this.scaffoldTitle() }}</mat-label>
-                    <mat-select formControlName="scaffold">
+                    <mat-label #lblProjectTemplate>{{ this.scaffoldTitle() }}</mat-label>
+                    <mat-select formControlName="projectTemplate">
                         <mat-option *ngFor="let item of this.scaffoldList()" [value]="item.id">{{ item.data }}</mat-option>
                     </mat-select>
                 </mat-form-field>
