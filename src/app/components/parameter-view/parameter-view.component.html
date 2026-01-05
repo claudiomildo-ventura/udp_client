@@ -4,42 +4,42 @@
             <div class="d-flex space-x-10">
 
                 <mat-form-field appearance="outline">
-                    <mat-label #lblArchitecture>{{ this.architectureTitle() }}</mat-label>
+                    <mat-label #lblArchitecture>{{ this.architecture().payload }}</mat-label>
                     <mat-select formControlName="architectures">
                         <mat-option *ngFor="let item of this.architectures()" [value]="item.id">{{ item.data }}</mat-option>
                     </mat-select>
                 </mat-form-field>
 
                 <mat-form-field appearance="outline">
-                    <mat-label #lblDatabasePlatform>{{ this.databasePlatformTitle() }}</mat-label>
+                    <mat-label #lblDatabasePlatform>{{ this.databasePlatform().payload }}</mat-label>
                     <mat-select formControlName="databasePlatforms">
                         <mat-option *ngFor="let item of this.databasePlatforms()" [value]="item.id">{{ item.data }}</mat-option>
                     </mat-select>
                 </mat-form-field>
 
                 <mat-form-field appearance="outline">
-                    <mat-label #lblDatabaseEngineer>{{ this.databaseEngineerTitle() }}</mat-label>
+                    <mat-label #lblDatabaseEngineer>{{ this.databaseEngineer().payload }}</mat-label>
                     <mat-select formControlName="databaseEngineers">
                         <mat-option *ngFor="let item of this.databaseEngineers()" [value]="item.id">{{ item.data }}</mat-option>
                     </mat-select>
                 </mat-form-field>
 
                 <mat-form-field appearance="outline">
-                    <mat-label #lblEngineeringPlatform>{{ this.engineeringPlatformTitle() }}</mat-label>
+                    <mat-label #lblEngineeringPlatform>{{ this.engineeringPlatform().payload }}</mat-label>
                     <mat-select formControlName="engineeringPlatforms">
                         <mat-option *ngFor="let item of this.engineeringPlatforms()" [value]="item.id">{{ item.data }}</mat-option>
                     </mat-select>
                 </mat-form-field>
 
                 <mat-form-field appearance="outline">
-                    <mat-label #lblTemplate>{{ this.templateTitle() }}</mat-label>
+                    <mat-label #lblTemplate>{{ this.template().payload }}</mat-label>
                     <mat-select formControlName="templates">
                         <mat-option *ngFor="let item of this.templates()" [value]="item.id">{{ item.data }}</mat-option>
                     </mat-select>
                 </mat-form-field>
 
                 <mat-form-field appearance="outline">
-                    <mat-label #lblProjectTemplate>{{ this.projectTemplateTitle() }}</mat-label>
+                    <mat-label #lblProjectTemplate>{{ this.projectTemplate().payload }}</mat-label>
                     <mat-select formControlName="projectTemplates">
                         <mat-option *ngFor="let item of this.projectTemplates()" [value]="item.id">{{ item.data }}</mat-option>
                     </mat-select>
@@ -56,6 +56,4 @@
     </div>
 </form>
 
-<div *ngIf="isPageLoading" class="loading-overlay">
-    <mat-spinner color="primary"></mat-spinner>
-</div>
+<progress-bar></progress-bar>

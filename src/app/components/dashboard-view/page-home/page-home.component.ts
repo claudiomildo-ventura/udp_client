@@ -1,7 +1,8 @@
 import {CommonModule} from "@angular/common";
-import {Component, inject, OnInit} from '@angular/core';
+import {AfterViewInit, Component, inject, OnChanges, OnInit} from '@angular/core';
 import {AbstractControl, FormBuilder, FormGroup, ReactiveFormsModule, Validators} from '@angular/forms';
 import {Router} from "@angular/router";
+import {ProgressBarComponent} from "src/app/components/progress-bar/progress-bar.component";
 import {ArchetypeService} from "src/app/core/services/archetype.service";
 import {MaterialModule} from "src/app/material.module";
 import {ApiResponse} from "src/app/shared/interface/ApiResponse";
@@ -17,12 +18,14 @@ import {ENVIRONMENT} from 'src/environments/environment';
     imports: [
         CommonModule,
         ReactiveFormsModule,
-        MaterialModule
+        MaterialModule,
+        ProgressBarComponent
     ],
     templateUrl: './page-home.component.html',
     styleUrls: ['./page-home.component.css'],
 })
-export class PageHomeComponent implements OnInit {
+export class PageHomeComponent implements OnInit, AfterViewInit, OnChanges {
+    public isPageLoading: boolean = true;
     public startValidation: boolean = false;
     public selectedFileName: string = StringFunc.STRING_EMPTY;
     public detail: ApiResponse<any> = {payload: StringFunc.STRING_EMPTY};
@@ -47,6 +50,19 @@ export class PageHomeComponent implements OnInit {
     ngOnInit(): void {
         void this.detailInitialize();
     }
+
+    ngAfterViewInit(): void {
+        this.progressBarInitialize();
+    }
+
+    ngOnChanges(): void {
+        if (this.isPageLoading) {
+            document.body.classList.add('loading-active');
+        } else {
+            document.body.classList.remove('loading-active');
+        }
+    }
+
 
     get detailControl(): AbstractControl<any, any> | null {
         return this.frm.get('group1.detail');
@@ -93,5 +109,11 @@ export class PageHomeComponent implements OnInit {
     private async detailInitialize(): Promise<void> {
         this.detail.payload = await this.archetypeService.getMapping(`${ENVIRONMENT.basePath}${ENVIRONMENT.endpoints.detail}`);
         this.frm.patchValue({detail: this.detail.payload});
+    }
+
+    private progressBarInitialize(): void {
+        setTimeout((): void => {
+            this.isPageLoading = false;
+        }, 5000);
     }
 }

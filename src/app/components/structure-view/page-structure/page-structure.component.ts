@@ -5,6 +5,7 @@ import {FormBuilder, FormGroup, ReactiveFormsModule} from "@angular/forms";
 import {MatSort} from "@angular/material/sort";
 import {MatTableDataSource} from "@angular/material/table";
 import {Router} from "@angular/router";
+import {ProgressBarComponent} from "src/app/components/progress-bar/progress-bar.component";
 import {ArchetypeService} from "src/app/core/services/archetype.service";
 import {IndexedDbService} from "src/app/core/services/indexed-db.service";
 import {MaterialModule} from "src/app/material.module";
@@ -20,7 +21,8 @@ import {ENVIRONMENT} from "src/environments/environment";
     imports: [
         CommonModule,
         MaterialModule,
-        ReactiveFormsModule
+        ReactiveFormsModule,
+        ProgressBarComponent
     ],
     templateUrl: './page-structure.component.html',
     styleUrl: './page-structure-app.component.css'
