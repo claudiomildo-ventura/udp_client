@@ -151,12 +151,12 @@ export class ParameterViewComponent implements OnInit {
         }
 
         const archetypeGenerate: ArchetypeGenerate = {
-            architectures: this.frm.value.architectures,
-            databasePlatforms: this.frm.value.databasePlatforms,
-            databaseEngineers: this.frm.value.databaseEngineers,
-            engineeringPlatforms: this.frm.value.engineeringPlatforms,
-            templates: this.frm.value.templates,
-            projectTemplates: this.frm.value.projectTemplates,
+            architecture: this.frm.value.architectures,
+            databasePlatform: this.frm.value.databasePlatforms,
+            databaseEngineer: this.frm.value.databaseEngineers,
+            engineeringPlatform: this.frm.value.engineeringPlatforms,
+            template: this.frm.value.templates,
+            projectTemplate: this.frm.value.projectTemplates,
             tables: tables
         };
 

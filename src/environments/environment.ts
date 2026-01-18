@@ -5,7 +5,7 @@ export const ENVIRONMENT = {
         detail: 'detail',
         footer: 'footer',
         enterprise: 'enterprise',
-        timezone: 'timezone',
+        timezone: 'verify',
         architecture: 'architecture',
         architectures: 'architectures',
         database_platform: 'database-platform',

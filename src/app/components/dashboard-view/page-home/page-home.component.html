@@ -10,7 +10,7 @@
                             readonly
                             rows="20"
                             formControlName="detail"
-                        >{{ detail.payload }}</textarea>
+                        >{{ this.detail().payload }}</textarea>
                     <mat-error *ngIf="startValidation && errorMessage">{{ errorMessage }}</mat-error>
                 </mat-form-field>
 

@@ -1,11 +1,11 @@
 import {Table} from "src/app/shared/interface/Table";
 
 export interface ArchetypeGenerate {
-    architectures: number
-    databasePlatforms: number
-    databaseEngineers: number
-    engineeringPlatforms: number
-    templates: number
-    projectTemplates: number
+    architecture: number
+    databasePlatform: number
+    databaseEngineer: number
+    engineeringPlatform: number
+    template: number
+    projectTemplate: number
     tables: Table[]
 }
