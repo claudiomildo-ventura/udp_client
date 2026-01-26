@@ -4,7 +4,7 @@
     <a class="anchor" aria-hidden="true" tabindex="-1" href="#project">
       🔗
     </a>
-    UDP - Unified Development Platform
+    ISEP | Integrated Software Engineering Platform - frontend
   </h1>
 
 <hr />
