@@ -12,6 +12,7 @@ import {MaterialModule} from "src/app/material.module";
 import {Field} from "src/app/shared/interface/Field";
 import {Table} from "src/app/shared/interface/Table";
 import {TableResponse} from "src/app/shared/interface/TablesResponse";
+import {BoldPipe} from "src/app/shared/pipe/bold.pipe";
 import {TECHNICAL_LOGGER} from "src/config/technical-logger";
 import {ENVIRONMENT} from "src/environments/environment";
 
@@ -22,7 +23,8 @@ import {ENVIRONMENT} from "src/environments/environment";
         CommonModule,
         MaterialModule,
         ReactiveFormsModule,
-        ProgressBarComponent
+        ProgressBarComponent,
+        BoldPipe
     ],
     templateUrl: './page-structure.component.html',
     styleUrl: './page-structure-app.component.css'

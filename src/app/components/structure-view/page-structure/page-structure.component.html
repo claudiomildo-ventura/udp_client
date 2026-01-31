@@ -7,28 +7,28 @@
                         <td mat-cell *matCellDef="let table" class="pb-4">
 
                             <mat-checkbox (change)="$event ? toggleAll(table) : null" [checked]="isAllSelected(table)">
-                                <span class="table-title">{{ table.id }} - {{ table.name | uppercase }}</span>
+                                <span class="table-title" [style.user-select]="'none'" [innerHTML]="(table.id + ' - ' + (table.name | uppercase)) | bold"></span>
                             </mat-checkbox>
 
                             <div class="fields-container">
                                 <mat-card *ngFor="let field of table.fields" class="field-card mat-elevation-z2" appearance="outlined">
 
-                                    <mat-card-header>
+                                    <mat-card-header [style.user-select]="'none'">
                                         <mat-card-title class="fw-bold"> {{ field.columnName | uppercase }}</mat-card-title>
                                     </mat-card-header>
 
                                     <mat-card-content>
                                         <mat-divider class="my-divider"></mat-divider>
-                                        <div class="field-details">
-                                            <mat-card-subtitle><strong>Type:</strong> {{ field.type }}</mat-card-subtitle>
-                                            <mat-card-subtitle><strong>Length:</strong> {{ field.length }}</mat-card-subtitle>
-                                            <mat-card-subtitle><strong>Index:</strong> {{ field.index }}</mat-card-subtitle>
-                                            <mat-card-subtitle><strong>Sequence:</strong> {{ field.sequence }}</mat-card-subtitle>
-                                            <mat-card-subtitle><strong>Auto Created:</strong> {{ field.isAutoCreated }}</mat-card-subtitle>
-                                            <mat-card-subtitle><strong>Primary Key:</strong> {{ field.isPrimaryKey }}</mat-card-subtitle>
-                                            <mat-card-subtitle><strong>Foreign Key:</strong> {{ field.isForeignKey }}</mat-card-subtitle>
-                                            <mat-card-subtitle><strong>Index:</strong> {{ field.isIndex }}</mat-card-subtitle>
-                                            <mat-card-subtitle><strong>Not null:</strong> {{ field.isNotNull }}</mat-card-subtitle>
+                                        <div class="field-details" [style.user-select]="'none'">
+                                            <mat-card-subtitle>Type: {{ field.type }}</mat-card-subtitle>
+                                            <mat-card-subtitle>Length: {{ field.length }}</mat-card-subtitle>
+                                            <mat-card-subtitle>Index: {{ field.index }}</mat-card-subtitle>
+                                            <mat-card-subtitle>Sequence: {{ field.sequence }}</mat-card-subtitle>
+                                            <mat-card-subtitle>Auto Created: {{ field.isAutoCreated }}</mat-card-subtitle>
+                                            <mat-card-subtitle>Primary Key: {{ field.isPrimaryKey }}</mat-card-subtitle>
+                                            <mat-card-subtitle>Foreign Key: {{ field.isForeignKey }}</mat-card-subtitle>
+                                            <mat-card-subtitle>Index: {{ field.isIndex }}</mat-card-subtitle>
+                                            <mat-card-subtitle>Not null: {{ field.isNotNull }}</mat-card-subtitle>
                                         </div>
                                     </mat-card-content>
 

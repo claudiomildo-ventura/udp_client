@@ -1,16 +1,16 @@
-<form [formGroup]="this.frm" (ngSubmit)="submit()">
+<form [formGroup]="frm" (ngSubmit)="submit()">
     <ng-container>
         <mat-card>
             <mat-card-content class="mat-elevation-z0">
 
                 <!-- Detail Textarea -->
-                <mat-form-field appearance="outline" class="w-100">
+                <mat-form-field appearance="outline" class="w-100" [style.user-select]="'none'">
                         <textarea
                             matInput
                             readonly
                             rows="20"
                             formControlName="detail"
-                        >{{ this.detail().payload }}</textarea>
+                        >{{ detail().payload }}</textarea>
                     <mat-error *ngIf="startValidation && errorMessage">{{ errorMessage }}</mat-error>
                 </mat-form-field>
 

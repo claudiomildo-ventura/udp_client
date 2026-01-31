@@ -23,7 +23,7 @@ import {ENVIRONMENT} from 'src/environments/environment';
         ProgressBarComponent
     ],
     templateUrl: './page-home.component.html',
-    styleUrls: ['./page-home.component.css'],
+    styleUrls: ['./page-home.component.css', "../../../../styles/sass/_variables.scss"],
 })
 export class PageHomeComponent implements OnInit, AfterViewInit, OnChanges {
     private readonly _detail: WritableSignal<ApiResponse<string>> = signal({payload: StringFunc.STRING_EMPTY});

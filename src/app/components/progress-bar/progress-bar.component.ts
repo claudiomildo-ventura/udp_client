@@ -1,5 +1,5 @@
 import {CommonModule} from "@angular/common";
-import {Component, OnInit} from '@angular/core';
+import {Component, OnDestroy, OnInit} from '@angular/core';
 import {MaterialModule} from "src/app/material.module";
 
 @Component({
@@ -12,22 +12,29 @@ import {MaterialModule} from "src/app/material.module";
     templateUrl: './progress-bar.component.html',
     styleUrl: './progress-bar.component.css'
 })
-export class ProgressBarComponent implements OnInit {
-    isPageLoading: boolean = true;  // This will control the visibility of the loading bar
-    progressValue = 0;
+export class ProgressBarComponent implements OnInit, OnDestroy {
+    public isPageLoading: boolean = true;
+    public progressValue: number = 0;
+    private interval?: ReturnType<typeof setInterval>;
 
-    ngOnInit() {
+    ngOnInit(): void {
         this.progressBarInitialize();
     }
 
+    ngOnDestroy(): void {
+        if (this.interval) {
+            clearInterval(this.interval);
+        }
+    }
+
     private progressBarInitialize(): void {
-        let interval = setInterval((): void => {
+        this.interval = setInterval((): void => {
             if (this.progressValue < 100) {
                 this.progressValue += 10;
             } else {
-                clearInterval(interval);
+                clearInterval(this.interval);
                 this.isPageLoading = false;
             }
-        }, 200);
+        }, 30);
     }
 }
